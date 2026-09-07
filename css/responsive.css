@@ -1,0 +1,192 @@
+/* ==========================================================================
+   CUATRO PAREDES - MEDIA QUERIES Y ADAPTABILIDAD RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero-media {
+    order: -1;
+  }
+
+  .hero-burger-img {
+    max-width: 420px;
+  }
+
+  .el-antojo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .menu-sidebar {
+    position: static;
+  }
+
+  .menu-categories-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .temporada-hero-box {
+    grid-template-columns: 1fr;
+  }
+
+  .pedir-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .pedir-media-col {
+    order: -1;
+  }
+
+  .casas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .colab-featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-club-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .regala-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eventos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archivo-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .archivo-years-col {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .footer-main-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: left;
+  }
+
+  .footer-links-block {
+    align-items: flex-start;
+  }
+
+  .footer-cities {
+    text-align: left;
+  }
+
+  .footer-social-links {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .header-container {
+    height: 58px;
+  }
+
+  .header-logo .logo-cuatro,
+  .header-logo .logo-paredes {
+    font-size: 1.3rem;
+  }
+
+  .btn-pedir-header {
+    font-size: 1rem;
+    padding: 6px 16px;
+  }
+
+  .section-header-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .cp-world-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .colabs-past-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .season-thumbs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .archive-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .banner-parchado-inner {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .banner-parchado-text {
+    text-align: center;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .el-antojo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-world-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .season-thumbs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-item-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .menu-item-media {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .pedir-btn-group {
+    grid-template-columns: 1fr;
+  }
+}

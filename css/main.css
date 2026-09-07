@@ -1,0 +1,373 @@
+/* ==========================================================================
+   CUATRO PAREDES - ESTILOS PRINCIPALES Y VARIABLES GLOBALES
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Permanent+Marker&family=Caveat:wght@600;700&display=swap');
+
+:root {
+  /* Paleta de Colores Oficial Cuatro Paredes */
+  --cp-red: #E31B23;
+  --cp-red-hover: #C5161D;
+  --cp-red-dark: #9F0F15;
+  --cp-red-glow: rgba(227, 27, 35, 0.35);
+  
+  --cp-cream: #F5EFEB;
+  --cp-cream-soft: #F9F6F2;
+  --cp-cream-card: #ECE5DE;
+  --cp-cream-dark: #E2DBD2;
+  
+  --cp-black: #111111;
+  --cp-dark: #161616;
+  --cp-dark-card: #1E1E1E;
+  --cp-dark-border: #2A2A2A;
+  
+  --cp-white: #FFFFFF;
+  --cp-border: #DDD6CD;
+  --cp-text: #111111;
+  --cp-muted: #78736D;
+  --cp-muted-light: #A39E98;
+
+  /* Tipografías */
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hand: 'Caveat', 'Permanent Marker', cursive;
+
+  /* Elevaciones y Transiciones */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.22);
+  --shadow-red: 0 8px 30px rgba(227, 27, 35, 0.28);
+  
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 9999px;
+  
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --container-width: 1280px;
+}
+
+/* Reset y Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--cp-cream);
+  color: var(--cp-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Utilidades de Texto */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+.font-hand {
+  font-family: var(--font-hand);
+}
+
+.text-red {
+  color: var(--cp-red);
+}
+
+/* ==========================================================================
+   HEADER Y NAVEGACIÓN SUPERIOR (Fiel al Mockup)
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--cp-cream);
+  border-bottom: 1px solid var(--cp-cream-dark);
+  z-index: 1000;
+  transition: var(--transition);
+}
+
+.site-header.scrolled {
+  background-color: rgba(245, 239, 235, 0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-link {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  color: var(--cp-black);
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav-link:hover {
+  color: var(--cp-red);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--cp-red);
+  transition: var(--transition);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Logotipo Cuatro Paredes Central */
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  line-height: 0.85;
+}
+
+.header-logo .logo-cuatro,
+.header-logo .logo-paredes {
+  font-family: var(--font-display);
+  color: var(--cp-red);
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+}
+
+.header-logo:hover {
+  transform: scale(1.03);
+}
+
+/* Botón Pedir Ahora y Acciones */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-pedir-header {
+  background-color: var(--cp-red);
+  color: var(--cp-white);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  padding: 8px 22px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 10px rgba(227, 27, 35, 0.25);
+}
+
+.btn-pedir-header:hover {
+  background-color: var(--cp-red-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(227, 27, 35, 0.35);
+}
+
+/* Botón de Carrito Flotante / Header */
+.cart-trigger-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--cp-black);
+  color: var(--cp-white);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cart-trigger-btn:hover {
+  background-color: var(--cp-red);
+  transform: scale(1.05);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: var(--cp-red);
+  color: var(--cp-white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--cp-cream);
+}
+
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+  cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--cp-black);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+/* Drawer Móvil */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 100%;
+  background-color: var(--cp-cream);
+  border-bottom: 2px solid var(--cp-cream-dark);
+  padding: 24px;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 999;
+  box-shadow: var(--shadow-lg);
+}
+
+.mobile-nav-drawer.open {
+  display: flex;
+}
+
+.mobile-nav-drawer .nav-link {
+  font-size: 1.5rem;
+}
+
+/* Títulos de Sección Reutilizables */
+.section-header-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--cp-cream-dark);
+  padding-bottom: 8px;
+}
+
+.section-title-giant {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 6.5rem);
+  color: var(--cp-red);
+  line-height: 0.9;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.section-subtitle-right {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+  color: var(--cp-black);
+  text-transform: uppercase;
+}
+
+.section-subtitle-sub {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: var(--cp-black);
+  text-transform: uppercase;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+/* Animaciones */
+@keyframes pulseBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.pulse-bounce {
+  animation: pulseBounce 0.5s ease-in-out;
+}
+
+/* Toast Notifications */
+.cp-toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background-color: var(--cp-black);
+  color: var(--cp-white);
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-left: 4px solid var(--cp-red);
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.cp-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

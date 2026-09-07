@@ -1,0 +1,8 @@
+# Sistema Operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos temporales de extracción
+mockup_panels/
+*.log
