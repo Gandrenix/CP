@@ -2,7 +2,61 @@
    CUATRO PAREDES - ESTILOS PRINCIPALES Y VARIABLES GLOBALES
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* Supply (Pangram Pangram Foundry) — la tipografía de despliegue real de
+   la marca, tal como aparece en el menú impreso y en el deck interno
+   (Supply-Regular / Medium en el .ai del menú). Licencia propia del
+   cliente, comprada aparte; los archivos viven en el repo (assets/fonts)
+   para que Netlify los sirva -- no dependen de nada instalado en local.
+   woff2 primero (más liviano, todo navegador moderno lo soporta); otf de
+   respaldo solo para motores muy viejos. Un solo font-family con varios
+   font-weight en vez de nombres por peso, para poder seguir usando
+   font-weight normal en el resto del CSS. */
+@font-face {
+  font-family: 'Supply';
+  src: url('../assets/fonts/Supply-UltraLight.woff2') format('woff2'),
+       url('../assets/fonts/Supply-UltraLight.otf') format('opentype');
+  font-weight: 250;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Supply';
+  src: url('../assets/fonts/Supply-Light.woff2') format('woff2'),
+       url('../assets/fonts/Supply-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Supply';
+  src: url('../assets/fonts/Supply-Regular.woff2') format('woff2'),
+       url('../assets/fonts/Supply-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Supply';
+  src: url('../assets/fonts/Supply-Medium.woff2') format('woff2'),
+       url('../assets/fonts/Supply-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Supply';
+  src: url('../assets/fonts/Supply-Bold.woff2') format('woff2'),
+       url('../assets/fonts/Supply-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Paleta de Colores Oficial Cuatro Paredes (extraída de los valores RGB
@@ -34,7 +88,7 @@
   --cp-muted-light: #A39E98;
 
   /* Tipografías */
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-display: 'Supply', 'Bebas Neue', 'Impact', sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-hand: 'Caveat', 'Permanent Marker', cursive;
   --font-mono: 'Space Mono', 'IBM Plex Mono', monospace;
