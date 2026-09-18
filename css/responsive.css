@@ -3,6 +3,17 @@
    ========================================================================== */
 
 @media (max-width: 1024px) {
+  /* En desktop hero-section es flex-row solo para centrar verticalmente
+     el grid (la imagen va aparte, en absolute). En mobile la imagen vuelve
+     a fluir (position:relative) como hermana del grid, así que sin
+     flex-direction:column ambas compiten por ancho en una fila y se
+     encogen (el texto del título terminaba comprimido y desbordado). */
+  .hero-section {
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -10,11 +21,49 @@
   }
 
   .hero-media {
-    order: -1;
+    min-height: 0;
   }
 
-  .hero-burger-img {
-    max-width: 420px;
+  /* El sello se queda anclado (absolute, misma esquina que en desktop) a
+     la esquina inferior derecha real de la sección; el tamaño que ya
+     tiene (clamp) queda bien en mobile, solo hacía falta la posición. */
+  .hero-stamp-badge {
+    bottom: 18px;
+    right: 20px;
+  }
+
+  /* La hamburguesa sigue siendo una capa (position:absolute, fuera del
+     flujo) igual que en desktop: NO debe empujar ni separar el texto de
+     hero-content, solo flotar detrás de él (z-index 1 < hero-grid 2) a
+     una profundidad distinta, como el resto del efecto parallax. Se
+     redimensiona por ancho (no por alto de la sección, que en un
+     viewport angosto la dejaría gigantesca) y se ancla abajo/derecha,
+     cerca de donde cae el sello. En mobile además se oscurece: sus tonos
+     cálidos (pan, queso) compiten con el texto blanco encima (el ícono y
+     "BUCARAMANGA" quedaban casi ilegibles), algo que en desktop no pasa
+     porque el texto cae sobre la zona ya oscurecida por el overlay. */
+  .hero-burger-cutout {
+    top: auto;
+    right: -6%;
+    bottom: 0;
+    width: 128%;
+    max-width: 480px;
+    filter: drop-shadow(0 35px 40px rgba(0, 0, 0, 0.55)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.4)) brightness(0.55) saturate(0.85);
+  }
+
+  /* Refuerzo de legibilidad para el tag de ubicación, que en mobile cae
+     justo sobre el borde superior de la hamburguesa. */
+  .hero-location-tag {
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.9);
+  }
+
+  .hero-content {
+    align-items: center;
+  }
+
+  .hero-scene-overlay {
+    background:
+      linear-gradient(180deg, rgba(17, 17, 17, 0.55) 0%, rgba(17, 17, 17, 0.75) 55%, rgba(17, 17, 17, 0.95) 100%);
   }
 
   .el-antojo-grid {

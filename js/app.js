@@ -8,23 +8,81 @@ document.addEventListener('DOMContentLoaded', () => {
   initArcadeGame();
   initOrderPanel();
   initHeroParallax();
+  initGridParallax();
 });
 
-// 0. Parallax sutil de la foto del Hero (profundidad al hacer scroll)
+// 0. Parallax multicapa del Hero: la foto de fondo y la hamburguesa
+// flotante se mueven a distinta velocidad con el mouse (profundidad),
+// más un desplazamiento sutil por scroll que funciona en cualquier
+// dispositivo, incluido táctil (donde el mousemove simplemente no ocurre).
 function initHeroParallax() {
-  const img = document.getElementById('heroParallaxImg');
   const heroSection = document.getElementById('hero');
-  if (!img || !heroSection) return;
+  const sceneBg = document.getElementById('heroSceneBg');
+  const cutout = document.getElementById('heroBurgerCutout');
+  if (!heroSection || !sceneBg || !cutout) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  let scrollOffset = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let ticking = false;
+
+  function apply() {
+    sceneBg.style.transform = `translate3d(${pointerX * 10}px, ${(pointerY * 6) + (scrollOffset * 0.3)}px, 0) scale(1.06)`;
+    cutout.style.transform = `translate3d(${pointerX * -26}px, ${(pointerY * -18) + (scrollOffset * -0.15)}px, 0)`;
+    ticking = false;
+  }
+
+  function requestApply() {
+    if (!ticking) {
+      requestAnimationFrame(apply);
+      ticking = true;
+    }
+  }
+
+  function onScroll() {
+    const rect = heroSection.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      scrollOffset = Math.min(Math.max(rect.top * -0.04, -18), 18);
+      requestApply();
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  if (window.matchMedia('(pointer: fine)').matches) {
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      pointerX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      pointerY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+      requestApply();
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      pointerX = 0;
+      pointerY = 0;
+      requestApply();
+    });
+  }
+
+  apply();
+}
+
+// 0.1 Cuadrícula roja de fondo: se desplaza a una fracción de la velocidad
+// del scroll (parallax clásico) para dar sensación de profundidad en las
+// secciones de fondo plano. Un solo scroll listener mueve una custom
+// property en :root que todas las secciones leen (--grid-shift), en vez
+// de recalcular estilos por sección.
+function initGridParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const CELL = 84;
+  const root = document.documentElement;
   let ticking = false;
 
   function update() {
-    const rect = heroSection.getBoundingClientRect();
-    if (rect.bottom > 0 && rect.top < window.innerHeight) {
-      const offset = Math.min(Math.max(rect.top * -0.06, -24), 24);
-      img.style.transform = `translateY(${offset}px)`;
-    }
+    const shift = (window.scrollY * 0.15) % CELL;
+    root.style.setProperty('--grid-shift', `${shift}px`);
     ticking = false;
   }
 
@@ -94,7 +152,7 @@ function initMenuTabs() {
 
     menuContainer.innerHTML = items.map(item => `
       <div class="menu-item-row" data-id="${item.id}">
-        <div class="menu-item-media">
+        <div class="menu-item-media${item.mediaFit === 'contain' ? ' menu-item-media--icon' : ''}">
           <img src="${item.image}" alt="${item.name}" loading="lazy">
           ${item.tag ? `<span class="menu-item-badge${item.tag === 'NUEVA' ? ' tag-teal' : ''}">${item.tag}</span>` : ''}
         </div>
@@ -268,134 +326,66 @@ function openEventRSVPModal(eventId) {
   openModal('eventModal');
 }
 
-// 6. Minijuego Retro Arcade: "CP BURGER STACK"
+// 6. Minijuego Arcade: "CP Burger Breaker" (js/game/*.js)
+// Los archivos del juego pesan ~lo suficiente como para no cargarlos si
+// nadie va a jugar: se inyectan la primera vez que se abre el modal, y la
+// instancia se crea/destruye con cada apertura/cierre para no dejar loops
+// de requestAnimationFrame corriendo de fondo con el modal cerrado.
+let cpArcadeInstance = null;
+let cpArcadeScriptsPromise = null;
+
+function loadArcadeScripts() {
+  if (cpArcadeScriptsPromise) return cpArcadeScriptsPromise;
+  const sources = window.CP_GAME_SCRIPTS || [];
+  cpArcadeScriptsPromise = sources.reduce((chain, src) => {
+    return chain.then(() => new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.appendChild(script);
+    }));
+  }, Promise.resolve());
+  return cpArcadeScriptsPromise;
+}
+
 function initArcadeGame() {
-  const canvas = document.getElementById('arcadeCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const scoreElem = document.getElementById('arcadeScore');
-  const startBtn = document.getElementById('startArcadeBtn');
+  const arcadeModal = document.getElementById('arcadeModal');
+  const openTrigger = document.querySelector('[data-world-action="juegos"]');
+  if (!arcadeModal || !openTrigger) return;
 
-  // El modal puede ser más angosto que los 340px del canvas (celulares pequeños).
-  // Medimos el ancho real disponible y lo aplicamos como max-width en línea,
-  // en vez de confiar solo en CSS, para que nunca se corte en ninguna pantalla.
-  const modalContent = canvas.closest('.cp-modal-content');
-  function fitCanvasToContainer() {
-    if (!modalContent) return;
-    const available = modalContent.clientWidth - 2; // margen mínimo de seguridad
-    canvas.style.maxWidth = Math.max(160, Math.min(340, available)) + 'px';
-  }
-  fitCanvasToContainer();
-  window.addEventListener('resize', fitCanvasToContainer);
-  if (modalContent && 'ResizeObserver' in window) {
-    new ResizeObserver(fitCanvasToContainer).observe(modalContent);
-  }
-
-  let score = 0;
-  let gameRunning = false;
-  let burgerX = 140;
-  let burgerWidth = 50;
-  let burgerHeight = 14;
-  let fallingItems = [];
-  let animId;
-
-  const itemTypes = [
-    { name: 'pan_arriba', color: '#DE9B52', points: 10 },
-    { name: 'carne', color: '#59291E', points: 15 },
-    { name: 'queso', color: '#F8B825', points: 10 },
-    { name: 'tocineta', color: '#BF2B2B', points: 20 },
-    { name: 'pepinillo', color: '#4A7C32', points: 5 }
-  ];
-
-  function resetGame() {
-    score = 0;
-    fallingItems = [];
-    burgerX = canvas.width / 2 - 25;
-    if (scoreElem) scoreElem.textContent = score;
-  }
-
-  function spawnItem() {
-    const type = itemTypes[Math.floor(Math.random() * itemTypes.length)];
-    fallingItems.push({
-      x: Math.random() * (canvas.width - 24),
-      y: -10,
-      size: 18,
-      speed: 2 + Math.random() * 2,
-      ...type
+  openTrigger.addEventListener('click', () => {
+    loadArcadeScripts().then(startArcadeInstance).catch(err => {
+      console.error('No se pudo cargar CP Burger Breaker', err);
     });
-  }
-
-  function loop() {
-    if (!gameRunning) return;
-    ctx.fillStyle = '#111';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Dibuja el pan/base del jugador
-    ctx.fillStyle = '#DE9B52';
-    ctx.beginPath();
-    ctx.roundRect(burgerX, canvas.height - 24, burgerWidth, burgerHeight, [0, 0, 8, 8]);
-    ctx.fill();
-
-    // Dibuja items cayendo
-    if (Math.random() < 0.04) spawnItem();
-
-    for (let i = fallingItems.length - 1; i >= 0; i--) {
-      const it = fallingItems[i];
-      it.y += it.speed;
-
-      ctx.fillStyle = it.color;
-      ctx.fillRect(it.x, it.y, it.size, it.size * 0.7);
-
-      // Colisión con la base
-      if (
-        it.y + it.size >= canvas.height - 24 &&
-        it.y <= canvas.height - 10 &&
-        it.x + it.size >= burgerX &&
-        it.x <= burgerX + burgerWidth
-      ) {
-        score += it.points;
-        if (scoreElem) scoreElem.textContent = score;
-        fallingItems.splice(i, 1);
-        continue;
-      }
-
-      if (it.y > canvas.height) {
-        fallingItems.splice(i, 1);
-      }
-    }
-
-    animId = requestAnimationFrame(loop);
-  }
-
-  // El canvas se escala por CSS en pantallas angostas; convertimos la posición
-  // del puntero de píxeles reales (rect) a coordenadas internas del canvas.
-  function pointerToCanvasX(clientX) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    return (clientX - rect.left) * scaleX;
-  }
-
-  canvas.addEventListener('mousemove', (e) => {
-    const x = pointerToCanvasX(e.clientX);
-    burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, x - burgerWidth / 2));
   });
 
-  // Soporte táctil para móviles
-  canvas.addEventListener('touchmove', (e) => {
-    if (e.touches.length > 0) {
-      const x = pointerToCanvasX(e.touches[0].clientX);
-      burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, x - burgerWidth / 2));
-      e.preventDefault();
-    }
-  }, { passive: false });
+  // Si cierran el modal (X, click afuera, o Escape ya manejado por el
+  // navegador para fullscreen) destruimos la instancia: para el loop de
+  // render, quita listeners de input y de ResizeObserver.
+  arcadeModal.querySelectorAll('.modal-close-trigger').forEach(btn => {
+    btn.addEventListener('click', destroyArcadeInstance);
+  });
+  arcadeModal.addEventListener('click', (e) => {
+    if (e.target === arcadeModal) destroyArcadeInstance();
+  });
+}
 
-  if (startBtn) {
-    startBtn.addEventListener('click', () => {
-      resetGame();
-      gameRunning = true;
-      startBtn.textContent = 'REINICIAR JUEGO';
-      cancelAnimationFrame(animId);
-      loop();
-    });
+function startArcadeInstance() {
+  if (cpArcadeInstance) return; // ya corriendo
+  const canvas = document.getElementById('arcadeCanvas');
+  const shell = document.getElementById('gameShell');
+  const canvasWrap = document.querySelector('.game-canvas-wrap');
+  if (!canvas || !shell || !canvasWrap || !window.CPGame || !window.CPGame.BurgerBreaker) return;
+
+  cpArcadeInstance = new window.CPGame.BurgerBreaker({
+    canvas, canvasWrap, shell, hudRoot: shell, primaryBtn: document.getElementById('startArcadeBtn')
+  });
+}
+
+function destroyArcadeInstance() {
+  if (cpArcadeInstance) {
+    cpArcadeInstance.destroy();
+    cpArcadeInstance = null;
   }
 }

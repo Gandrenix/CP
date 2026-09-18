@@ -81,42 +81,48 @@ const MENU_DATA = {
       name: "CARNE (130 GR)",
       price: 10000,
       description: "Una porción extra de carne para cualquier burger.",
-      image: "assets/img/burger_sencilla_combo.jpg"
+      image: "assets/img/icon-carne.png",
+      mediaFit: "contain"
     },
     {
       id: "add-pollo",
       name: "POLLO",
       price: 9000,
       description: "Pollo Jhonny Wings.",
-      image: "assets/img/burger_hot_sweet.jpg"
+      image: "assets/img/icon-alitas.png",
+      mediaFit: "contain"
     },
     {
       id: "add-enchulado",
       name: "ENCHULADO",
       price: 5000,
       description: "Extra de nuestra salsa insignia.",
-      image: "assets/img/burger_trufada.jpg"
+      image: "assets/img/icon-salsa.png",
+      mediaFit: "contain"
     },
     {
       id: "add-tocineta",
       name: "TOCINETA",
       price: 4500,
       description: "Tocineta crocante extra.",
-      image: "assets/img/papas_trufadas.jpg"
+      image: "assets/img/icon-tocineta.png",
+      mediaFit: "contain"
     },
     {
       id: "add-queso",
       name: "QUESO",
       price: 4500,
       description: "Queso extra derretido.",
-      image: "assets/img/burger_azul_maple.jpg"
+      image: "assets/img/icon-queso.png",
+      mediaFit: "contain"
     },
     {
       id: "add-pepinillos",
       name: "PEPINILLOS",
       price: 2000,
       description: "Porción extra de pepinillos.",
-      image: "assets/img/burger_sencilla_combo.jpg"
+      image: "assets/img/icon-pepinillos.png",
+      mediaFit: "contain"
     },
     {
       id: "galleta",
@@ -133,42 +139,48 @@ const MENU_DATA = {
       name: "AGUA",
       price: 7000,
       description: "Botella de agua.",
-      image: "assets/img/mesa_combo_varios.jpg"
+      image: "assets/img/icon-agua.png",
+      mediaFit: "contain"
     },
     {
       id: "coca-cola-250",
       name: "COCA-COLA (250 ML)",
       price: 5000,
       description: "Presentación personal en vidrio.",
-      image: "assets/img/mesa_combo_varios.jpg"
+      image: "assets/img/icon-cocacola250.png",
+      mediaFit: "contain"
     },
     {
       id: "coca-cola-400",
       name: "COCA-COLA (400 ML)",
       price: 7000,
       description: "Presentación grande.",
-      image: "assets/img/mesa_combo_varios.jpg"
+      image: "assets/img/icon-cocacola400.png",
+      mediaFit: "contain"
     },
     {
       id: "coca-cola-zero",
       name: "COCA-COLA ZERO (400 ML)",
       price: 7000,
       description: "Sin azúcar.",
-      image: "assets/img/mesa_combo_varios.jpg"
+      image: "assets/img/icon-cocacola400zero.png",
+      mediaFit: "contain"
     },
     {
       id: "soda",
       name: "SODA",
       price: 7000,
       description: "Soda de la casa.",
-      image: "assets/img/mesa_combo_varios.jpg"
+      image: "assets/img/icon-soda.png",
+      mediaFit: "contain"
     },
     {
       id: "soda-roja",
       name: "SODA ROJA",
       price: 7000,
       description: "Bebida refrescante sabor a cereza.",
-      image: "assets/img/mesa_combo_varios.jpg",
+      image: "assets/img/icon-sodaroja.png",
+      mediaFit: "contain",
       tag: "CEREZA"
     },
     {
@@ -176,7 +188,8 @@ const MENU_DATA = {
       name: "SODA AZUL",
       price: 7000,
       description: "Bebida refrescante sabor cítrico con un toque de albahaca.",
-      image: "assets/img/mesa_combo_varios.jpg",
+      image: "assets/img/icon-sodaazul.png",
+      mediaFit: "contain",
       tag: "CÍTRICO"
     }
   ],

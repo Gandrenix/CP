@@ -10,14 +10,47 @@
   background-color: var(--cp-black);
   color: var(--cp-white);
   padding: 60px 0 40px;
+  min-height: min(720px, 100vh);
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
+/* Escena de fondo (foto real de mesa) a todo el ancho de la sección. El
+   texto se apoya en su propia zona oscura natural + el degradado de abajo
+   asegura contraste sin importar cómo caiga el recorte de object-fit. */
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-scene-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 78% 50%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.hero-scene-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.97) 0%, rgba(17, 17, 17, 0.88) 28%, rgba(17, 17, 17, 0.4) 52%, rgba(17, 17, 17, 0.05) 72%, transparent 88%),
+    linear-gradient(to top, rgba(17, 17, 17, 0.55) 0%, transparent 22%);
+}
+
 .hero-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
   gap: 32px;
+  width: 100%;
 }
 
 .hero-content {
@@ -43,6 +76,16 @@
   line-height: 0.95;
   color: var(--cp-white);
   letter-spacing: 0.5px;
+}
+
+/* El botón es más ancho que "🙂 BUCARAMANGA"; este bloque se ajusta al
+   ancho del botón y centra la línea de ubicación debajo de él, en vez de
+   solo alinear los bordes izquierdos de ambos. */
+.hero-cta-block {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 .hero-btn-pedir {
@@ -75,7 +118,6 @@
   letter-spacing: 2px;
   color: var(--cp-muted-light);
   text-transform: uppercase;
-  margin-top: 6px;
 }
 
 .hero-smiley-icon {
@@ -86,62 +128,138 @@
 
 .hero-media {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 2;
   width: 100%;
+  min-height: 200px;
 }
 
-/* Resplandor ambiental detrás de la foto: da profundidad sin depender de
-   una imagen específica (funciona igual si la foto del hero cambia). */
-.hero-media-glow {
+/* La hamburguesa se dimensiona a la altura completa de la sección (según su
+   propia proporción, no la de la columna del grid) y se alinea al borde
+   derecho real del hero, igual que la escena de fondo, en vez de quedar
+   centrada y recortada dentro de su columna. Va fuera del grid en el HTML
+   para no heredar el max-width del container; el z-index la deja por
+   delante del fondo pero detrás del texto y el sello. */
+.hero-burger-cutout {
   position: absolute;
-  inset: -35% -30%;
-  background: radial-gradient(circle at 50% 42%, rgba(238, 40, 47, 0.85) 0%, rgba(238, 40, 47, 0.55) 30%, rgba(238, 40, 47, 0.25) 50%, rgba(179, 221, 222, 0.22) 68%, transparent 85%);
-  filter: blur(60px);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.hero-media-frame {
-  position: relative;
+  /* Un poco más abajo y a la derecha que el borde exacto: le da margen al
+     parallax (que la desplaza con el mouse) para moverse sin que el
+     contenido real de la imagen (la mano, no solo el lienzo) llegue a
+     recortarse contra el borde de la sección. */
+  top: 78px;
+  right: -16px;
+  bottom: -78px;
   z-index: 1;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-width: 620px;
-  overflow: visible;
-}
-
-.hero-burger-img {
-  position: absolute;
-  inset: -8%;
-  width: 116%;
-  height: 128%;
-  object-fit: cover;
-  display: block;
-  border-radius: var(--radius-md);
-  -webkit-mask-image: radial-gradient(ellipse 70% 76% at 50% 46%, black 38%, transparent 96%);
-  mask-image: radial-gradient(ellipse 70% 76% at 50% 46%, black 38%, transparent 96%);
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: auto;
+  max-width: none;
+  -webkit-mask-image: radial-gradient(ellipse 92% 90% at 52% 54%, black 62%, black 82%, transparent 100%);
+  mask-image: radial-gradient(ellipse 92% 90% at 52% 54%, black 62%, black 82%, transparent 100%);
+  filter: drop-shadow(0 35px 40px rgba(0, 0, 0, 0.55)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.4));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-media-glow { animation: none; }
-  .hero-burger-img { transition: none; }
+  .hero-burger-cutout,
+  .hero-scene-bg {
+    transition: none;
+  }
 }
 
+/* Sello independiente (hermano de hero-scene / hero-burger-cutout / hero-grid
+   dentro de hero-section): así se ancla a la esquina real de la sección,
+   no a la columna del grid, y con z-index 3 queda por delante de todo. */
 .hero-stamp-badge {
   position: absolute;
-  bottom: 24px;
-  right: 20px;
+  z-index: 3;
+  bottom: 28px;
+  right: 32px;
   font-family: var(--font-hand);
-  font-size: 1.85rem;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
   color: #F8F3EC;
   transform: rotate(-10deg);
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
   pointer-events: none;
   line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   CUADRÍCULA ROJA DE FONDO
+   Las secciones con fondo plano (crema o negro) quedaban "vacías" sin
+   ninguna textura. Esta cuadrícula (rejilla grande, no un patrón fino) se
+   pinta detrás del contenido normal (z-index:-1, dentro del stacking
+   context que crea position:relative en la sección) y se desplaza sola al
+   hacer scroll -- ver initGridParallax() en app.js -- para dar sensación
+   de profundidad sin tocar el layout de nada de lo que ya hay encima.
+   -------------------------------------------------------------------------- */
+.el-antojo-section,
+.menu-section,
+.temporada-section,
+.las-casas-section,
+.cp-world-section,
+.eventos-section,
+.archivo-section,
+.pedir-section {
+  /* position:relative por sí solo NO crea un stacking context nuevo; sin
+     z-index explícito, el z-index:-1 del ::before se escapa a la raíz del
+     documento y termina pintándose detrás de TODAS las secciones (por
+     eso no se veía nada), no solo detrás de esta. El z-index:0 aquí es
+     lo que realmente contiene la cuadrícula dentro de su propia sección. */
+  position: relative;
+  z-index: 0;
+}
+
+.el-antojo-section::before,
+.menu-section::before,
+.temporada-section::before,
+.las-casas-section::before,
+.cp-world-section::before,
+.eventos-section::before,
+.archivo-section::before,
+.pedir-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  /* Rojo apagado (menos brillo/saturación que --cp-red) para que sea
+     textura de fondo, no un segundo rojo compitiendo con los títulos y
+     acentos que sí usan el rojo de marca. */
+  background-image:
+    repeating-linear-gradient(to right, rgba(146, 52, 51, 0.3) 0 2px, transparent 2px 84px),
+    repeating-linear-gradient(to bottom, rgba(146, 52, 51, 0.3) 0 2px, transparent 2px 84px);
+  background-position: 0 var(--grid-shift, 0px);
+  pointer-events: none;
+}
+
+.pedir-section::before {
+  background-image:
+    repeating-linear-gradient(to right, rgba(146, 52, 51, 0.38) 0 2px, transparent 2px 84px),
+    repeating-linear-gradient(to bottom, rgba(146, 52, 51, 0.38) 0 2px, transparent 2px 84px);
+}
+
+/* El título gigante de sección usa --cp-red por defecto; sobre la
+   cuadrícula (también roja, aunque más apagada) los dos rojos competían
+   entre sí y costaba distinguir el borde de las letras. Aquí, más negro. */
+.el-antojo-section .section-title-giant,
+.menu-section .section-title-giant,
+.temporada-section .section-title-giant,
+.las-casas-section .section-title-giant,
+.cp-world-section .section-title-giant,
+.eventos-section .section-title-giant,
+.archivo-section .section-title-giant {
+  color: #1a0b0b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .el-antojo-section::before,
+  .menu-section::before,
+  .temporada-section::before,
+  .las-casas-section::before,
+  .cp-world-section::before,
+  .eventos-section::before,
+  .archivo-section::before,
+  .pedir-section::before {
+    background-position: 0 0;
+  }
 }
 
 /* Franja Inferior: EL ANTOJO */
@@ -313,6 +431,18 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
+}
+
+/* Adiciones y Bebidas: ilustraciones de línea roja con fondo transparente
+   (arte real de marca), no fotos -- se muestran completas y centradas,
+   sin recortar y sin la caja negra pensada para fotos. */
+.menu-item-media--icon {
+  padding: 18px;
+  background-color: transparent;
+}
+
+.menu-item-media--icon img {
+  object-fit: contain;
 }
 
 .menu-item-row:hover .menu-item-media img {
@@ -767,6 +897,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 22%;
 }
 
 .casa-city-tag {
@@ -1871,6 +2002,23 @@
   position: relative;
   box-shadow: var(--shadow-lg);
   padding: 32px;
+}
+
+/* Marca contenido de CP World que todavía es una idea del plan 2026, no
+   algo confirmado por el cliente (ej. "Burger Dealers", "CP x Jim Pluk",
+   "Objetos", "Merch"): una fuente distinta a la de marca, chica y discreta,
+   para que se note a simple vista que es un placeholder sin tocar el
+   layout ni el tono del resto del texto. */
+.placeholder-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  color: var(--cp-muted);
+  font-weight: 400;
+  text-transform: none;
+  vertical-align: middle;
+  margin-left: 8px;
 }
 
 .modal-close-trigger {
