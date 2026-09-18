@@ -83,19 +83,145 @@ const GALLERY_PHOTOS = [
   { title: "Galleta Chips de Chocolate", image: "assets/img/galleta_chocolate.jpg", tag: "POSTRE" }
 ];
 
-function initGalleryCP() {
-  const galleryContainer = document.getElementById('archiveGalleryGrid');
-  if (!galleryContainer) return;
+// Carrusel "Cinta CP" (rollo de 35mm): scroll nativo con scroll-snap (sin
+// loop de JS para el desplazamiento), resaltado del fotograma centrado vía
+// IntersectionObserver, arrastre con mouse y auto-avance lento que se
+// pausa solo con cualquier interacción. Las fotos se duplican una vez en
+// el DOM para que el loop del auto-avance no se note (mismo truco que un
+// marquee infinito), salvo que el usuario pida menos movimiento.
+function initFilmCarousel() {
+  const track = document.getElementById('filmStripTrack');
+  const prevBtn = document.getElementById('filmPrevBtn');
+  const nextBtn = document.getElementById('filmNextBtn');
+  if (!track) return;
 
-  galleryContainer.innerHTML = GALLERY_PHOTOS.map((item) => `
-    <div class="archive-photo-card" onclick="openLightbox('${item.image}', '${item.title}', '${item.tag}')">
-      <img src="${item.image}" alt="${item.title}" loading="lazy">
-      <div class="archive-photo-overlay">
-        <span class="archive-tag">${item.tag}</span>
-        <span class="archive-photo-title">${item.title}</span>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function frameHTML(item, i) {
+    const safeTitle = item.title.replace(/'/g, "\\'");
+    return `
+      <div class="film-frame" data-index="${i}">
+        <img src="${item.image}" alt="${item.title}" loading="lazy">
+        <div class="film-frame-label">
+          <span class="film-frame-tag">${item.tag}</span>
+          <span class="film-frame-title">${item.title}</span>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }
+
+  const setHTML = GALLERY_PHOTOS.map(frameHTML).join('');
+  track.innerHTML = reducedMotion ? setHTML : setHTML + setHTML;
+
+  const frames = Array.from(track.children);
+  let moved = false;
+
+  frames.forEach((frame, i) => {
+    frame.addEventListener('click', () => {
+      if (moved) return;
+      const item = GALLERY_PHOTOS[i % GALLERY_PHOTOS.length];
+      openLightbox(item.image, item.title, item.tag);
+    });
+  });
+
+  // Resalta el fotograma más cercano al centro: el rootMargin negativo
+  // reduce la zona "observada" a una franja central angosta del track, así
+  // solo el fotograma que realmente está en el medio queda activo.
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-active', entry.isIntersecting && entry.intersectionRatio > 0.5);
+    });
+  }, { root: track, threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: '0px -35% 0px -35%' });
+  frames.forEach((f) => observer.observe(f));
+
+  // --- Arrastre con mouse (en táctil el scroll nativo ya funciona solo) ---
+  let isDown = false;
+  let startX = 0;
+  let startScroll = 0;
+
+  track.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'touch') return;
+    isDown = true;
+    moved = false;
+    startX = e.clientX;
+    startScroll = track.scrollLeft;
+    track.classList.add('is-dragging');
+    stopAutoplay();
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    track.scrollLeft = startScroll - dx;
+  });
+
+  window.addEventListener('pointerup', () => {
+    if (!isDown) return;
+    isDown = false;
+    track.classList.remove('is-dragging');
+    scheduleAutoplayResume();
+  });
+
+  // --- Flechas prev/next ---
+  function step(dir) {
+    const width = frames[0] ? frames[0].getBoundingClientRect().width + 14 : 300;
+    track.scrollBy({ left: dir * width, behavior: 'smooth' });
+    stopAutoplay();
+    scheduleAutoplayResume();
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => step(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => step(1));
+
+  // --- Auto-avance continuo y lento, con loop sin costuras ---
+  // setInterval en vez de requestAnimationFrame: un rAF encadenado se
+  // frena o se detiene del todo en cuanto la pestaña pierde foco real (ya
+  // nos pasó con el timer del "Prepárate..." del arcade -- ver game.js),
+  // y este carrusel debe seguir moviéndose aunque el usuario tenga otra
+  // ventana al frente. setInterval no depende de eso.
+  let intervalId = null;
+  let resumeTimer = null;
+  const TICK_MS = 30;
+  const SPEED = 0.7; // px por tick
+
+  function autoplayTick() {
+    if (isDown) return;
+    track.scrollLeft += SPEED;
+    const singleSetWidth = track.scrollWidth / 2;
+    if (track.scrollLeft >= singleSetWidth) {
+      track.scrollLeft -= singleSetWidth;
+    }
+  }
+
+  function stopAutoplay() {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+    if (resumeTimer) {
+      clearTimeout(resumeTimer);
+      resumeTimer = null;
+    }
+    track.classList.remove('is-autoplaying');
+  }
+
+  function startAutoplay() {
+    track.classList.add('is-autoplaying');
+    if (!intervalId) intervalId = setInterval(autoplayTick, TICK_MS);
+  }
+
+  function scheduleAutoplayResume() {
+    if (reducedMotion) return;
+    resumeTimer = setTimeout(startAutoplay, 1800);
+  }
+
+  track.addEventListener('mouseenter', stopAutoplay);
+  track.addEventListener('mouseleave', scheduleAutoplayResume);
+  track.addEventListener('touchstart', stopAutoplay, { passive: true });
+  track.addEventListener('touchend', scheduleAutoplayResume, { passive: true });
+
+  if (!reducedMotion) startAutoplay();
 }
 
 // Lightbox Modal para fotos
@@ -138,6 +264,6 @@ function init3DTilt() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initSeasonCarousel();
-  initGalleryCP();
+  initFilmCarousel();
   init3DTilt();
 });

@@ -486,11 +486,21 @@
           <h2 class="section-title-giant">GALERÍA</h2>
           <span class="section-subtitle-right">HECHO PARA EL ANTOJO.</span>
         </div>
+      </div>
 
-        <!-- Cuadrícula de Fotos con Lightbox (renderizado desde season-archive.js) -->
-        <div class="archive-gallery-grid" id="archiveGalleryGrid">
+      <!-- Carrusel "Cinta CP": rollo de película 35mm. Va fuera de
+           .container a propósito para sangrar a todo el ancho de la
+           sección (efecto cine), mientras el título arriba respeta el
+           margen normal. Los fotogramas se generan desde season-archive.js;
+           el avance/loop/drag es JS liviano (scroll nativo, sin librerías). -->
+      <div class="film-carousel" id="filmCarousel">
+        <button class="film-nav-btn film-nav-prev" id="filmPrevBtn" aria-label="Foto anterior">&larr;</button>
+
+        <div class="film-strip-track" id="filmStripTrack">
           <!-- Renderizado dinámico desde season-archive.js -->
         </div>
+
+        <button class="film-nav-btn film-nav-next" id="filmNextBtn" aria-label="Foto siguiente">&rarr;</button>
       </div>
     </section>
   </main>
