@@ -1,4 +1,4 @@
-// Cuatro Paredes - Lógica de Temporada, Archivo y Efectos Interactivos
+// Cuatro Paredes - Lógica de Temporada, Galería y Efectos Interactivos
 
 let currentSeasonIndex = 0;
 
@@ -36,7 +36,7 @@ function initSeasonCarousel() {
     });
   }
 
-  // Click en miniaturas de archivo de temporada
+  // Click en miniaturas de otros experimentos de temporada
   document.querySelectorAll('.season-thumb-card').forEach((card, idx) => {
     card.addEventListener('click', () => {
       currentSeasonIndex = idx % SEASON_ITEMS.length;
@@ -72,37 +72,30 @@ function updateSeasonUI() {
   if (note) note.textContent = current.note;
 }
 
-// Lógica de filtrado para Archivo CP (Panel 11)
-function initArchiveCP() {
-  const yearButtons = document.querySelectorAll('.archive-year-btn');
+// Galería CP (Panel: fotos reales del producto; espacio listo para sumar
+// las fotografías adicionales que comparta el restaurante más adelante).
+const GALLERY_PHOTOS = [
+  { title: "Azul Maple", image: "assets/img/burger_azul_maple.jpg", tag: "EXPERIMENTO #2" },
+  { title: "Burger Trufada", image: "assets/img/burger_trufada.jpg", tag: "EXPERIMENTO #1" },
+  { title: "Hot Sweet Burger", image: "assets/img/burger_hot_sweet.jpg", tag: "BURGERS" },
+  { title: "Papas Trufadas", image: "assets/img/papas_trufadas.jpg", tag: "PAPAS" },
+  { title: "Combo para Varios", image: "assets/img/mesa_combo_varios.jpg", tag: "PARCHE" },
+  { title: "Galleta Chips de Chocolate", image: "assets/img/galleta_chocolate.jpg", tag: "POSTRE" }
+];
+
+function initGalleryCP() {
   const galleryContainer = document.getElementById('archiveGalleryGrid');
+  if (!galleryContainer) return;
 
-  function renderYear(year) {
-    const photos = ARCHIVE_PHOTOS[year] || ARCHIVE_PHOTOS["2026"];
-    if (!galleryContainer) return;
-
-    galleryContainer.innerHTML = photos.map((item, i) => `
-      <div class="archive-photo-card" onclick="openLightbox('${item.image}', '${item.title}', '${item.tag}')">
-        <img src="${item.image}" alt="${item.title}" loading="lazy">
-        <div class="archive-photo-overlay">
-          <span class="archive-tag">${item.tag}</span>
-          <span class="archive-photo-title">${item.title}</span>
-        </div>
+  galleryContainer.innerHTML = GALLERY_PHOTOS.map((item) => `
+    <div class="archive-photo-card" onclick="openLightbox('${item.image}', '${item.title}', '${item.tag}')">
+      <img src="${item.image}" alt="${item.title}" loading="lazy">
+      <div class="archive-photo-overlay">
+        <span class="archive-tag">${item.tag}</span>
+        <span class="archive-photo-title">${item.title}</span>
       </div>
-    `).join('');
-  }
-
-  yearButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      yearButtons.forEach(b => b.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      const year = e.currentTarget.getAttribute('data-year');
-      renderYear(year);
-    });
-  });
-
-  // Render inicial
-  renderYear("2026");
+    </div>
+  `).join('');
 }
 
 // Lightbox Modal para fotos
@@ -143,49 +136,8 @@ function init3DTilt() {
   });
 }
 
-// Lógica de Regala una Burger (Panel 9)
-function initGiftCardSection() {
-  const giftOptions = document.querySelectorAll('.gift-amount-option');
-  const displayAmount = document.getElementById('giftCardDisplayAmount');
-  let selectedAmount = 50000;
-
-  giftOptions.forEach(opt => {
-    opt.addEventListener('click', (e) => {
-      giftOptions.forEach(o => o.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      const val = parseInt(e.currentTarget.getAttribute('data-amount'), 10);
-      selectedAmount = val;
-      if (displayAmount) {
-        displayAmount.textContent = window.cpCart ? window.cpCart.formatMoney(val) : `$${val}`;
-      }
-    });
-  });
-
-  const regalarBtn = document.getElementById('regalarBurgerBtn');
-  if (regalarBtn) {
-    regalarBtn.addEventListener('click', () => {
-      openGiftModal(selectedAmount);
-    });
-  }
-}
-
-function openGiftModal(amount) {
-  const modal = document.getElementById('giftCardModal');
-  const amountField = document.getElementById('modalGiftAmount');
-  if (amountField) amountField.value = window.cpCart ? window.cpCart.formatMoney(amount) : `$${amount}`;
-  if (modal) modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeGiftModal() {
-  const modal = document.getElementById('giftCardModal');
-  if (modal) modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   initSeasonCarousel();
-  initArchiveCP();
+  initGalleryCP();
   init3DTilt();
-  initGiftCardSection();
 });

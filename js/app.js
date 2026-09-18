@@ -7,7 +7,36 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initArcadeGame();
   initOrderPanel();
+  initHeroParallax();
 });
+
+// 0. Parallax sutil de la foto del Hero (profundidad al hacer scroll)
+function initHeroParallax() {
+  const img = document.getElementById('heroParallaxImg');
+  const heroSection = document.getElementById('hero');
+  if (!img || !heroSection) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let ticking = false;
+
+  function update() {
+    const rect = heroSection.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      const offset = Math.min(Math.max(rect.top * -0.06, -24), 24);
+      img.style.transform = `translateY(${offset}px)`;
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+}
 
 // 1. Barra de Navegación y Scroll Suave
 function initNavbar() {
@@ -67,7 +96,7 @@ function initMenuTabs() {
       <div class="menu-item-row" data-id="${item.id}">
         <div class="menu-item-media">
           <img src="${item.image}" alt="${item.name}" loading="lazy">
-          ${item.tag ? `<span class="menu-item-badge">${item.tag}</span>` : ''}
+          ${item.tag ? `<span class="menu-item-badge${item.tag === 'NUEVA' ? ' tag-teal' : ''}">${item.tag}</span>` : ''}
         </div>
         <div class="menu-item-details">
           <div class="menu-item-header">
@@ -75,6 +104,7 @@ function initMenuTabs() {
             <span class="menu-item-price">${window.cpCart ? window.cpCart.formatMoney(item.price) : `$${item.price}`}</span>
           </div>
           <p class="menu-item-desc">${item.description}</p>
+          ${item.comboNote ? `<p class="menu-item-combo-note">${item.comboNote}</p>` : ''}
           <button class="menu-item-order-link" onclick="handleMenuOrder('${catKey}', '${item.id}')">
             PEDIR <span>&rarr;</span>
           </button>
@@ -132,8 +162,8 @@ function initCPWorldInteractions() {
       const action = e.currentTarget.getAttribute('data-world-action');
       if (action === 'eventos') {
         scrollToSection('#eventos');
-      } else if (action === 'colabs') {
-        scrollToSection('#colaboraciones');
+      } else if (action === 'jim-pluk') {
+        openModal('colabPlukModal');
       } else if (action === 'burger-dealers') {
         openModal('dealersModal');
       } else if (action === 'merch') {
@@ -217,19 +247,16 @@ function openStoreMapModal(store) {
   const hours = document.getElementById('mapModalHours');
   const link = document.getElementById('mapModalExternalLink');
 
-  if (store === 'bucaramanga') {
-    if (title) title.textContent = 'CUATRO PAREDES • BUCARAMANGA';
-    if (address) address.textContent = 'Cra 35 #37-46, El Prado, San Gil plaza, Local 431, Bucaramanga.';
-    if (hours) hours.textContent = 'Martes a Domingo: 12:00 p.m. - 10:00 p.m.';
-    if (link) link.href = 'https://maps.google.com/?q=Cra+35+37-46+Bucaramanga';
-  } else {
-    if (title) title.textContent = 'CUATRO PAREDES • SAN GIL';
-    if (address) address.textContent = 'Cra 10 #10-62, Centro Histórico, San Gil, Santander.';
-    if (hours) hours.textContent = 'Martes a Domingo: 12:00 p.m. - 10:00 p.m.';
-    if (link) link.href = 'https://maps.google.com/?q=Cra+10+10-62+San+Gil';
-  }
+  if (title) title.textContent = 'CUATRO PAREDES • BUCARAMANGA';
+  if (address) address.textContent = 'Cra 35 #37-46, El Prado, San Gil plaza, Local 431, Bucaramanga.';
+  if (hours) hours.textContent = 'Martes a Domingo: 12:00 p.m. - 10:00 p.m.';
+  if (link) link.href = 'https://maps.google.com/?q=Cra+35+37-46+Bucaramanga';
 
   openModal('storeMapModal');
+
+  if (window.showStoreOnMap) {
+    window.showStoreOnMap('bucaramanga');
+  }
 }
 
 function openEventRSVPModal(eventId) {
@@ -248,6 +275,21 @@ function initArcadeGame() {
   const ctx = canvas.getContext('2d');
   const scoreElem = document.getElementById('arcadeScore');
   const startBtn = document.getElementById('startArcadeBtn');
+
+  // El modal puede ser más angosto que los 340px del canvas (celulares pequeños).
+  // Medimos el ancho real disponible y lo aplicamos como max-width en línea,
+  // en vez de confiar solo en CSS, para que nunca se corte en ninguna pantalla.
+  const modalContent = canvas.closest('.cp-modal-content');
+  function fitCanvasToContainer() {
+    if (!modalContent) return;
+    const available = modalContent.clientWidth - 2; // margen mínimo de seguridad
+    canvas.style.maxWidth = Math.max(160, Math.min(340, available)) + 'px';
+  }
+  fitCanvasToContainer();
+  window.addEventListener('resize', fitCanvasToContainer);
+  if (modalContent && 'ResizeObserver' in window) {
+    new ResizeObserver(fitCanvasToContainer).observe(modalContent);
+  }
 
   let score = 0;
   let gameRunning = false;
@@ -325,18 +367,24 @@ function initArcadeGame() {
     animId = requestAnimationFrame(loop);
   }
 
-  canvas.addEventListener('mousemove', (e) => {
+  // El canvas se escala por CSS en pantallas angostas; convertimos la posición
+  // del puntero de píxeles reales (rect) a coordenadas internas del canvas.
+  function pointerToCanvasX(clientX) {
     const rect = canvas.getBoundingClientRect();
-    const clientX = e.clientX - rect.left;
-    burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, clientX - burgerWidth / 2));
+    const scaleX = canvas.width / rect.width;
+    return (clientX - rect.left) * scaleX;
+  }
+
+  canvas.addEventListener('mousemove', (e) => {
+    const x = pointerToCanvasX(e.clientX);
+    burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, x - burgerWidth / 2));
   });
 
   // Soporte táctil para móviles
   canvas.addEventListener('touchmove', (e) => {
     if (e.touches.length > 0) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches[0].clientX - rect.left;
-      burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, clientX - burgerWidth / 2));
+      const x = pointerToCanvasX(e.touches[0].clientX);
+      burgerX = Math.max(0, Math.min(canvas.width - burgerWidth, x - burgerWidth / 2));
       e.preventDefault();
     }
   }, { passive: false });

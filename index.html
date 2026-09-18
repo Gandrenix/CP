@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CUATRO PAREDES | Burgers. Sodas. Antojos.</title>
-  <meta name="description" content="Cuatro Paredes - Smash burgers artesanales, sodas de la casa y antojados en Bucaramanga y San Gil. Hecho para el antojo.">
+  <title>CUATRO PAREDES | Smiley Face Burgers &amp; Stuff</title>
+  <meta name="description" content="Cuatro Paredes - Burgers, papas y sodas de la casa en Bucaramanga. Smiley face burgers & stuff.">
   
   <!-- Estilos CSS -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E31B23'/><text x='50%' y='65%' font-size='50' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CP</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23EE282F'/><text x='50%' y='65%' font-size='50' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CP</text></svg>">
 </head>
 <body>
 
@@ -59,11 +59,8 @@
       <a href="#temporada" class="nav-link">TEMPORADA</a>
       <a href="#casas" class="nav-link">LAS CASAS</a>
       <a href="#cp-world" class="nav-link">CP WORLD</a>
-      <a href="#colaboraciones" class="nav-link">COLABORACIONES</a>
-      <a href="#club" class="nav-link">CP CLUB</a>
-      <a href="#regala" class="nav-link">REGALA UNA BURGER</a>
       <a href="#eventos" class="nav-link">EVENTOS</a>
-      <a href="#archivo" class="nav-link">ARCHIVO CP</a>
+      <a href="#galeria" class="nav-link">GALERÍA</a>
     </div>
   </header>
 
@@ -78,20 +75,24 @@
             CUATRO<br>PAREDES
           </h1>
           <div class="hero-subheadings">
-            BURGERS.<br>
-            SODAS.<br>
-            ANTOJOS.
+            SMILEY FACE<br>
+            BURGERS<br>
+            &amp; STUFF.
           </div>
           <a href="#pedir" class="hero-btn-pedir">
             PEDIR AHORA &rarr;
           </a>
           <div class="hero-location-tag">
-            BUCARAMANGA &bull; SAN GIL
+            <img src="assets/img/icon-smiley.svg" alt="" class="hero-smiley-icon" aria-hidden="true">
+            BUCARAMANGA
           </div>
         </div>
 
         <div class="hero-media">
-          <img src="assets/img/hero_burger.jpg" alt="Smash burger doble con queso fundido y tocineta" class="hero-burger-img">
+          <div class="hero-media-glow" aria-hidden="true"></div>
+          <div class="hero-media-frame">
+            <img src="assets/img/burger_azul_maple.jpg" alt="Burger Azul Maple de Cuatro Paredes" class="hero-burger-img" id="heroParallaxImg">
+          </div>
           <div class="hero-stamp-badge">
             HECHO<br>PARA EL<br>ANTOJO.
           </div>
@@ -108,40 +109,40 @@
         </div>
 
         <div class="el-antojo-grid">
-          <!-- Card Clásica -->
-          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'clasica')">
+          <!-- Card Sencilla -->
+          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'sencilla')">
             <div class="antojo-card-img-wrap">
-              <img src="assets/img/burger_clasica.jpg" alt="Hamburguesa Clásica" loading="lazy">
+              <img src="assets/img/burger_sencilla_combo.jpg" alt="Hamburguesa Sencilla" loading="lazy">
             </div>
-            <h3 class="antojo-card-name">CLÁSICA</h3>
-            <span class="antojo-card-price">$22.000</span>
+            <h3 class="antojo-card-name">SENCILLA</h3>
+            <span class="antojo-card-price">$24.900</span>
           </div>
 
-          <!-- Card Cheese -->
-          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'cheese')">
+          <!-- Card Hot Sweet -->
+          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'hot-sweet')">
             <div class="antojo-card-img-wrap">
-              <img src="assets/img/antojo_cheese.png" alt="Hamburguesa Cheese" loading="lazy">
+              <img src="assets/img/burger_hot_sweet.jpg" alt="Hot Sweet Burger" loading="lazy">
             </div>
-            <h3 class="antojo-card-name">CHEESE</h3>
-            <span class="antojo-card-price">$24.000</span>
+            <h3 class="antojo-card-name">HOT SWEET</h3>
+            <span class="antojo-card-price">$27.000</span>
           </div>
 
-          <!-- Card Doble -->
-          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'doble')">
+          <!-- Card Trufada -->
+          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'trufada')">
             <div class="antojo-card-img-wrap">
-              <img src="assets/img/hero_burger.jpg" alt="Hamburguesa Doble" loading="lazy">
+              <img src="assets/img/burger_trufada.jpg" alt="Burger Trufada" loading="lazy">
             </div>
-            <h3 class="antojo-card-name">DOBLE</h3>
-            <span class="antojo-card-price">$28.000</span>
+            <h3 class="antojo-card-name">TRUFADA</h3>
+            <span class="antojo-card-price">$29.000</span>
           </div>
 
-          <!-- Card Especial -->
-          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'especial')">
+          <!-- Card Azul Maple -->
+          <div class="antojo-card" onclick="handleMenuOrder('burgers', 'azul-maple')">
             <div class="antojo-card-img-wrap">
-              <img src="assets/img/antojo_especial.png" alt="Hamburguesa Especial" loading="lazy">
+              <img src="assets/img/burger_azul_maple.jpg" alt="Burger Azul Maple" loading="lazy">
             </div>
-            <h3 class="antojo-card-name">ESPECIAL</h3>
-            <span class="antojo-card-price">$26.000</span>
+            <h3 class="antojo-card-name">AZUL MAPLE</h3>
+            <span class="antojo-card-price">$29.000</span>
           </div>
         </div>
       </div>
@@ -159,9 +160,10 @@
           <aside class="menu-sidebar">
             <div class="menu-categories-list">
               <button class="menu-cat-btn active" data-cat="burgers">BURGERS</button>
-              <button class="menu-cat-btn" data-cat="sodas">SODAS</button>
-              <button class="menu-cat-btn" data-cat="cookies">COOKIES</button>
-              <button class="menu-cat-btn" data-cat="salsas">SALSAS</button>
+              <button class="menu-cat-btn" data-cat="papas">PAPAS</button>
+              <button class="menu-cat-btn" data-cat="combos">COMBOS</button>
+              <button class="menu-cat-btn" data-cat="adiciones">ADICIONES</button>
+              <button class="menu-cat-btn" data-cat="bebidas">BEBIDAS</button>
             </div>
           </aside>
 
@@ -180,22 +182,22 @@
       <div class="container">
         <div class="section-header-wrap">
           <h2 class="section-title-giant">TEMPORADA</h2>
-          <span class="section-subtitle-right" id="seasonCounter">01 / 04</span>
+          <span class="section-subtitle-right" id="seasonCounter">01 / 02</span>
         </div>
 
         <!-- Hero Box Dividido -->
         <div class="temporada-hero-box">
           <div class="temporada-media-wrap">
-            <img src="assets/img/meltdown_burger.jpg" alt="The Meltdown Seasonal Burger" id="seasonImage">
+            <img src="assets/img/burger_azul_maple.jpg" alt="Burger Azul Maple" id="seasonImage">
           </div>
           <div class="temporada-info-block">
-            <h3 class="temporada-burger-name" id="seasonTitle">THE MELTDOWN</h3>
+            <h3 class="temporada-burger-name" id="seasonTitle">AZUL MAPLE</h3>
             <p class="temporada-burger-desc" id="seasonDesc">
-              Carne Angus, queso cheddar, salsa de jalapeño, cebolla caramelizada, pan artesanal.
+              Pan de papa, carne, dip de queso azul, cebolla caramelizada en miel de maple y queso mozzarella. Nuestro segundo experimento.
             </p>
-            <div class="temporada-burger-price" id="seasonPrice">$27.000</div>
+            <div class="temporada-burger-price" id="seasonPrice">$29.000</div>
             <button class="btn-temporada-pedir" id="seasonOrderBtn">PEDIR AHORA &rarr;</button>
-            <span class="temporada-disclaimer" id="seasonNote">Disponible hasta agotar existencias.</span>
+            <span class="temporada-disclaimer" id="seasonNote">Agranda a doble por $45.500.</span>
           </div>
         </div>
 
@@ -205,36 +207,20 @@
           <button class="temporada-ctrl-btn" id="seasonNextBtn">SIGUIENTE &rarr;</button>
         </div>
 
-        <!-- Franja Archivo CP de Temporada -->
+        <!-- Otros experimentos de temporada -->
         <div class="season-archive-block">
-          <h3 class="season-archive-title">ARCHIVO CP</h3>
-          <div class="season-years-nav">
-            <span class="season-year-tab active">2026</span>
-            <span class="season-year-tab">2025</span>
-            <span class="season-year-tab">2024</span>
-            <span class="season-year-tab">2023</span>
-          </div>
+          <h3 class="season-archive-title">OTROS EXPERIMENTOS</h3>
 
           <div class="season-thumbs-grid">
             <div class="season-thumb-card">
-              <img src="assets/img/meltdown_burger.jpg" alt="The Meltdown" class="season-thumb-img">
-              <div class="season-thumb-name">THE MELTDOWN</div>
-              <div class="season-thumb-year">2026</div>
+              <img src="assets/img/burger_azul_maple.jpg" alt="Azul Maple" class="season-thumb-img">
+              <div class="season-thumb-name">AZUL MAPLE</div>
+              <div class="season-thumb-year">EXPERIMENTO #2</div>
             </div>
             <div class="season-thumb-card">
-              <img src="assets/img/hero_burger.jpg" alt="La Santa" class="season-thumb-img">
-              <div class="season-thumb-name">LA SANTA</div>
-              <div class="season-thumb-year">2025</div>
-            </div>
-            <div class="season-thumb-card">
-              <img src="assets/img/event_burger.jpg" alt="Tropical" class="season-thumb-img">
-              <div class="season-thumb-name">TROPICAL</div>
-              <div class="season-thumb-year">2024</div>
-            </div>
-            <div class="season-thumb-card">
-              <img src="assets/img/burger_clasica.jpg" alt="La Noche" class="season-thumb-img">
-              <div class="season-thumb-name">LA NOCHE</div>
-              <div class="season-thumb-year">2023</div>
+              <img src="assets/img/burger_trufada.jpg" alt="Burger Trufada" class="season-thumb-img">
+              <div class="season-thumb-name">TRUFADA</div>
+              <div class="season-thumb-year">EXPERIMENTO #1</div>
             </div>
           </div>
         </div>
@@ -252,15 +238,7 @@
           <!-- Columna Izquierda: Formulario de Selección -->
           <div class="pedir-form-col">
             <div class="pedir-step-block">
-              <h3>1. ¿DÓNDE QUIERES PEDIR?</h3>
-              <div class="pedir-btn-group">
-                <button class="pedir-toggle-btn active" data-order-city="BUCARAMANGA">BUCARAMANGA</button>
-                <button class="pedir-toggle-btn" data-order-city="SAN GIL">SAN GIL</button>
-              </div>
-            </div>
-
-            <div class="pedir-step-block">
-              <h3>2. ¿CÓMO QUIERES?</h3>
+              <h3>¿CÓMO QUIERES?</h3>
               <div class="pedir-btn-group">
                 <button class="pedir-toggle-btn active" data-order-mode="DOMICILIO">DOMICILIO</button>
                 <button class="pedir-toggle-btn" data-order-mode="RECOGER">RECOGER</button>
@@ -295,7 +273,7 @@
           <!-- Columna Derecha: Foto de Papas y Nota Caligráfica -->
           <div class="pedir-media-col">
             <div class="pedir-media-wrap">
-              <img src="assets/img/pedir_fries.jpg" alt="Papas fritas en caja Cuatro Paredes con Coca-Cola fría" loading="lazy">
+              <img src="assets/img/papas_trufadas.jpg" alt="Papas trufadas de Cuatro Paredes" loading="lazy">
             </div>
             <div class="pedir-handwritten-note">
               LA BURGER LLEGA.<br>TÚ DISFRUTA.
@@ -311,9 +289,9 @@
     <section class="las-casas-section" id="casas">
       <div class="container">
         <h2 class="section-title-giant">LAS CASAS</h2>
-        <div class="section-subtitle-sub">DOS CIUDADES, MISMO ANTOJO.</div>
+        <div class="section-subtitle-sub">UNA CIUDAD, TODO EL ANTOJO.</div>
 
-        <div class="casas-grid">
+        <div class="casas-grid casas-grid-single">
           <!-- Sede Bucaramanga -->
           <div class="casa-card">
             <div class="casa-card-img-wrap">
@@ -344,37 +322,6 @@
               </button>
             </div>
           </div>
-
-          <!-- Sede San Gil -->
-          <div class="casa-card">
-            <div class="casa-card-img-wrap">
-              <img src="assets/img/store_sangil.jpg" alt="Sede San Gil Centro" loading="lazy">
-              <span class="casa-city-tag">SAN GIL</span>
-            </div>
-            <div class="casa-card-body">
-              <div class="casa-detail-row">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                </svg>
-                <div>
-                  <strong>Cra 10 #10-62</strong><br>
-                  Centro Histórico, San Gil.
-                </div>
-              </div>
-              <div class="casa-detail-row">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                </svg>
-                <div>
-                  <strong>Mar - Dom</strong><br>
-                  12:00 p.m. - 10:00 p.m.
-                </div>
-              </div>
-              <button class="casa-btn-llegar" data-store-map="sangil">
-                CÓMO LLEGAR &rarr;
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -385,8 +332,8 @@
             VEN POR LAS BURGERS.<br>
             QUÉDATE PORQUE ESTÁS PARCHADO.
           </div>
-          <div class="banner-smiley-icon" title="Parchado :)">
-            :)
+          <div class="banner-smiley-icon" title="Parchado">
+            <img src="assets/img/icon-smiley-cream.svg" alt=":)" width="40" height="40">
           </div>
         </div>
       </div>
@@ -404,211 +351,52 @@
 
         <div class="cp-world-grid">
           <!-- 1. Eventos -->
-          <div class="cp-world-card" data-world-action="eventos">
-            <img src="assets/img/world_eventos.png" alt="Eventos Cuatro Paredes" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">EVENTOS</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <div class="cp-world-card tile-cream" data-world-action="eventos">
+            <img src="assets/img/icon-smiley.svg" alt="" class="cp-world-card-icon">
+            <span class="cp-world-card-title">EVENTOS</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
 
           <!-- 2. Burger Dealers -->
-          <div class="cp-world-card" data-world-action="burger-dealers">
-            <img src="assets/img/world_dealers.png" alt="Burger Dealers" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">BURGER DEALERS</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <div class="cp-world-card tile-black" data-world-action="burger-dealers">
+            <img src="assets/img/icon-smiley-wink.svg" alt="" class="cp-world-card-icon">
+            <span class="cp-world-card-title">BURGER<br>DEALERS</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
 
-          <!-- 3. Colabs -->
-          <div class="cp-world-card" data-world-action="colabs">
-            <img src="assets/img/world_colabs.png" alt="Colaboraciones CP" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">COLABS</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <!-- 3. Colab Jim Pluk -->
+          <div class="cp-world-card tile-red" data-world-action="jim-pluk">
+            <img src="assets/img/icon-cp-stamp.svg" alt="" class="cp-world-card-icon cp-world-card-icon-wide">
+            <span class="cp-world-card-title">CP &times;<br>JIM PLUK</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
 
           <!-- 4. Merch -->
-          <div class="cp-world-card" data-world-action="merch">
-            <img src="assets/img/world_merch.png" alt="Merch Oficial Cuatro Paredes" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">MERCH</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <div class="cp-world-card tile-teal" data-world-action="merch">
+            <img src="assets/img/icon-cp-stamp.svg" alt="" class="cp-world-card-icon cp-world-card-icon-wide">
+            <span class="cp-world-card-title">MERCH</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
 
           <!-- 5. Objetos -->
-          <div class="cp-world-card" data-world-action="objetos">
-            <img src="assets/img/world_objetos.png" alt="Stickers y Objetos de Colección" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">OBJETOS</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <div class="cp-world-card tile-cream" data-world-action="objetos">
+            <img src="assets/img/icon-smiley-wink.svg" alt="" class="cp-world-card-icon">
+            <span class="cp-world-card-title">OBJETOS</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
 
           <!-- 6. Juegos (Arcade Retro) -->
-          <div class="cp-world-card" data-world-action="juegos">
-            <img src="assets/img/world_juegos.png" alt="Juegos Arcade CP" loading="lazy">
-            <div class="cp-world-card-overlay">
-              <span class="cp-world-card-title">JUEGOS</span>
-              <span class="cp-world-card-arrow">&rarr;</span>
-            </div>
+          <div class="cp-world-card tile-black" data-world-action="juegos">
+            <img src="assets/img/icon-smiley.svg" alt="" class="cp-world-card-icon">
+            <span class="cp-world-card-title">JUEGOS</span>
+            <span class="cp-world-card-arrow">&rarr;</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         PANEL 7: COLABORACIONES
-         ======================================================================== -->
-    <section class="colabs-section" id="colaboraciones">
-      <div class="container">
-        <div class="section-header-wrap">
-          <h2 class="section-title-giant">COLABORACIONES</h2>
-          <span class="section-subtitle-right">MARCAS, IDEAS, BURGERS.</span>
-        </div>
-
-        <!-- Featured Drop: CP x CARHARTT -->
-        <div class="colab-featured-card">
-          <div class="colab-featured-img-wrap">
-            <img src="assets/img/colab_carhartt.jpg" alt="CP × Carhartt Streetwear T-shirt" loading="lazy">
-          </div>
-          <div class="colab-featured-info">
-            <h3 class="colab-title">CP &times; CARHARTT</h3>
-            <p class="colab-desc">Burgers, ropa y una misma visión.</p>
-            <div class="colab-year">2026</div>
-            <button class="colab-link-ver-mas" onclick="openModal('carharttModal')">
-              VER MÁS &rarr;
-            </button>
-          </div>
-        </div>
-
-        <!-- Colaboraciones Pasadas -->
-        <div class="colabs-past-grid">
-          <div class="colab-past-card" onclick="openModal('colabPlukModal')">
-            <img src="assets/img/colab_pluk.png" alt="CP × Jim Pluk" class="colab-past-img" loading="lazy">
-            <h4 class="colab-past-name">CP &times; JIM PLUK</h4>
-            <span class="colab-past-year">2025</span>
-          </div>
-
-          <div class="colab-past-card" onclick="openModal('colabNorteModal')">
-            <img src="assets/img/colab_norte.png" alt="CP × Cerveza Norte" class="colab-past-img" loading="lazy">
-            <h4 class="colab-past-name">CP &times; CERVEZA NORTE</h4>
-            <span class="colab-past-year">2025</span>
-          </div>
-
-          <div class="colab-past-card" onclick="openModal('colabTostaoModal')">
-            <img src="assets/img/colab_tostao.png" alt="CP × Tostao" class="colab-past-img" loading="lazy">
-            <h4 class="colab-past-name">CP &times; TOSTAO</h4>
-            <span class="colab-past-year">2024</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================================
-         PANEL 8: CP CLUB (FIDELIZACIÓN)
-         ======================================================================== -->
-    <section class="cp-club-section" id="club">
-      <div class="container">
-        <div class="section-header-wrap">
-          <h2 class="section-title-giant">CP CLUB</h2>
-          <span class="section-subtitle-right">PUNTOS. BENEFICIOS. SORPRESAS.</span>
-        </div>
-
-        <div class="cp-club-grid">
-          <!-- Columna Izquierda: Tarjeta Roja 3D Tilt -->
-          <div class="cp-club-card-preview">
-            <div class="club-card-3d-wrap tilt-card" id="clubCardTilt">
-              <img src="assets/img/club_card_hand.jpg" alt="Tarjeta de membresía CP Club" loading="lazy">
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Beneficios en Lista -->
-          <div class="cp-club-perks-col">
-            <div class="cp-club-perk-row">
-              <div class="cp-club-perk-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              </div>
-              <div>
-                <h4 class="cp-club-perk-title">PUNTOS</h4>
-                <p class="cp-club-perk-desc">Acumula en cada compra.</p>
-              </div>
-            </div>
-
-            <div class="cp-club-perk-row">
-              <div class="cp-club-perk-icon">
-                <svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
-              </div>
-              <div>
-                <h4 class="cp-club-perk-title">BENEFICIOS</h4>
-                <p class="cp-club-perk-desc">Descuentos y acceso exclusivo.</p>
-              </div>
-            </div>
-
-            <div class="cp-club-perk-row">
-              <div class="cp-club-perk-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 6a2 2 0 0 0 2-2c0-.38-.11-.73-.29-1.03L12 0l-1.71 2.97c-.18.3-.29.65-.29 1.03a2 2 0 0 0 2 2zm6 3h-1V8c0-.55-.45-1-1-1h-1c-.55 0-1 .45-1 1v1H9V8c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1v1H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2z"/></svg>
-              </div>
-              <div>
-                <h4 class="cp-club-perk-title">CUMPLEAÑOS</h4>
-                <p class="cp-club-perk-desc">Una burger de regalo en tu mes.</p>
-              </div>
-            </div>
-
-            <div class="cp-club-perk-row">
-              <div class="cp-club-perk-icon">
-                <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-              </div>
-              <div>
-                <h4 class="cp-club-perk-title">ACCESO ANTICIPADO</h4>
-                <p class="cp-club-perk-desc">A temporadas y eventos secretos.</p>
-              </div>
-            </div>
-
-            <button class="btn-unete-club" onclick="openModal('clubRegisterModal')">
-              ÚNETE AL CLUB &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================================
-         PANEL 9: REGALA UNA BURGER
-         ======================================================================== -->
-    <section class="regala-section" id="regala">
-      <div class="container">
-        <h2 class="section-title-giant">REGALA UNA BURGER</h2>
-        <div class="section-subtitle-sub">LA MEJOR FORMA DE DECIR TE QUIERO, ES CON CP.</div>
-
-        <div class="regala-grid">
-          <!-- Columna Izquierda: Tarjeta 3D -->
-          <div class="regala-card-media">
-            <div class="gift-card-img-wrap tilt-card">
-              <img src="assets/img/gift_card.jpg" alt="Tarjeta de Regalo Cuatro Paredes" loading="lazy">
-            </div>
-          </div>
-
-          <!-- Columna Derecha: Selector de Monto -->
-          <div class="regala-form-col">
-            <h3>ELIGE TU TARJETA</h3>
-            <button class="gift-amount-option" data-amount="30000">$30.000</button>
-            <button class="gift-amount-option active" data-amount="50000">$50.000</button>
-            <button class="gift-amount-option" data-amount="100000">$100.000</button>
-
-            <button class="btn-regalar-submit" id="regalarBurgerBtn">
-              REGALAR &rarr;
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================================
-         PANEL 10: EVENTOS
+         PANEL 7: EVENTOS
          ======================================================================== -->
     <section class="eventos-section" id="eventos">
       <div class="container">
@@ -618,9 +406,9 @@
         </div>
 
         <div class="eventos-grid">
-          <!-- Foto Izquierda: Burger & Soda en papel a cuadros -->
+          <!-- Foto Izquierda -->
           <div class="eventos-media-wrap">
-            <img src="assets/img/event_burger.jpg" alt="Cuatro Paredes Burger y Soda helada" loading="lazy">
+            <img src="assets/img/mesa_combo_varios.jpg" alt="Mesa con burgers y sodas Cuatro Paredes" loading="lazy">
           </div>
 
           <!-- Lista de Eventos Derecha -->
@@ -628,7 +416,7 @@
             <div class="evento-item-row">
               <div>
                 <h3 class="evento-title">BURGER DEALERS</h3>
-                <div class="evento-datetime">Sáb, 14 Jun 2026 &bull; 7:00 p.m.</div>
+                <div class="evento-datetime">Próxima fecha por confirmar</div>
                 <div class="evento-location">Bucaramanga</div>
               </div>
               <button class="evento-link-ver-mas" data-event-rsvp="event-1">
@@ -639,56 +427,35 @@
             <div class="evento-item-row">
               <div>
                 <h3 class="evento-title">JUEVES DE AJEDREZ</h3>
-                <div class="evento-datetime">Jue, 19 Jun 2026 &bull; 6:00 p.m.</div>
+                <div class="evento-datetime">Todos los jueves &bull; 6:00 p.m.</div>
                 <div class="evento-location">Bucaramanga</div>
               </div>
               <button class="evento-link-ver-mas" data-event-rsvp="event-2">
                 VER MÁS &rarr;
               </button>
             </div>
-
-            <div class="evento-item-row">
-              <div>
-                <h3 class="evento-title">LANZAMIENTO TEMPORADA</h3>
-                <div class="evento-datetime">Vie, 27 Jun 2026 &bull; 7:00 p.m.</div>
-                <div class="evento-location">San Gil</div>
-              </div>
-              <button class="evento-link-ver-mas" data-event-rsvp="event-3">
-                VER MÁS &rarr;
-              </button>
-            </div>
           </div>
         </div>
 
-        <button class="btn-ver-todos-eventos" onclick="openModal('allEventsModal')">
-          VER TODOS LOS EVENTOS &rarr;
-        </button>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="btn-ver-todos-eventos">
+          SÍGUENOS EN INSTAGRAM PARA FECHAS &rarr;
+        </a>
       </div>
     </section>
 
     <!-- ========================================================================
-         PANEL 11: ARCHIVO CP
+         PANEL 8: GALERÍA
          ======================================================================== -->
-    <section class="archivo-section" id="archivo">
+    <section class="archivo-section" id="galeria">
       <div class="container">
         <div class="section-header-wrap">
-          <h2 class="section-title-giant">ARCHIVO CP</h2>
-          <span class="section-subtitle-right">TODO LO QUE NOS HA PASADO.</span>
+          <h2 class="section-title-giant">GALERÍA</h2>
+          <span class="section-subtitle-right">HECHO PARA EL ANTOJO.</span>
         </div>
 
-        <div class="archivo-layout">
-          <!-- Columna Lateral de Años -->
-          <div class="archivo-years-col">
-            <button class="archive-year-btn active" data-year="2026">2026</button>
-            <button class="archive-year-btn" data-year="2025">2025</button>
-            <button class="archive-year-btn" data-year="2024">2024</button>
-            <button class="archive-year-btn" data-year="2023">2023</button>
-          </div>
-
-          <!-- Cuadrícula 2x3 de Fotos con Lightbox -->
-          <div class="archive-gallery-grid" id="archiveGalleryGrid">
-            <!-- Renderizado dinámico desde season-archive.js -->
-          </div>
+        <!-- Cuadrícula de Fotos con Lightbox (renderizado desde season-archive.js) -->
+        <div class="archive-gallery-grid" id="archiveGalleryGrid">
+          <!-- Renderizado dinámico desde season-archive.js -->
         </div>
       </div>
     </section>
@@ -699,7 +466,7 @@
        ======================================================================== -->
   <footer class="site-footer" id="contacto">
     <div class="footer-bg-wrap">
-      <img src="assets/img/footer_bg.jpg" alt="Cuatro Paredes Tienda Exterior" loading="lazy">
+      <img src="assets/img/mesa_combo_varios.jpg" alt="Mesa Cuatro Paredes" loading="lazy">
     </div>
 
     <div class="container footer-content">
@@ -708,14 +475,14 @@
         <div class="footer-hambre-block">
           <h2>&iquest;HAMBRE?</h2>
           <a href="#pedir" class="btn-footer-pedir">PEDIR AHORA &rarr;</a>
+          <img src="assets/img/cuatroparedes_illustration.svg" alt="Cuatro Paredes" class="footer-illustration">
         </div>
 
         <!-- Bloque Derecho: Información y Redes -->
         <div class="footer-links-block">
           <h3 class="footer-brand-title">CUATRO PAREDES</h3>
           <div class="footer-cities">
-            Bucaramanga &bull; El Prado<br>
-            San Gil &bull; Centro Histórico
+            Bucaramanga &bull; El Prado
           </div>
 
           <div class="footer-social-links">
@@ -739,7 +506,10 @@
 
       <!-- Barra Inferior Legal -->
       <div class="footer-bottom-bar">
-        <span>&copy; 2026 Cuatro Paredes. Todos los derechos reservados.</span>
+        <div class="footer-copyright-row">
+          <img src="assets/img/icon-cp-stamp.svg" alt="C/P" class="footer-cp-stamp">
+          <span>&copy; 2026 Cuatro Paredes. Todos los derechos reservados.</span>
+        </div>
         <div class="footer-legal-links">
           <a href="#" onclick="openModal('terminosModal'); return false;">Términos y condiciones</a>
           <span>&bull;</span>
@@ -784,7 +554,7 @@
       <div class="cart-checkout-inputs">
         <input type="text" id="checkoutCustomerName" class="cart-input" placeholder="Tu Nombre completo" required>
         <input type="tel" id="checkoutCustomerPhone" class="cart-input" placeholder="Teléfono de contacto" required>
-        <input type="text" id="checkoutCustomerAddress" class="cart-input" placeholder="Dirección exacta de entrega (Bucaramanga / San Gil)">
+        <input type="text" id="checkoutCustomerAddress" class="cart-input" placeholder="Dirección exacta de entrega en Bucaramanga">
         <input type="text" id="checkoutCustomerNotes" class="cart-input" placeholder="¿Algún cambio? (ej. Sin cebolla, extra salsa...)">
       </div>
 
@@ -805,54 +575,23 @@
       <h3 class="font-display" id="mapModalTitle" style="font-size: 2rem; color: var(--cp-red); margin-bottom: 12px;">SEDE</h3>
       <p id="mapModalAddress" style="margin-bottom: 8px; font-weight: 600;"></p>
       <p id="mapModalHours" style="margin-bottom: 20px; color: var(--cp-muted);"></p>
-      <div style="background-color: #EEE; border-radius: 8px; height: 200px; display:flex; align-items:center; justify-content:center; margin-bottom: 20px;">
-        <span style="font-weight:700; color:#555;">📍 VISTA DE MAPA INTERACTIVO</span>
+      <div class="store-map-wrap">
+        <div id="storeMap"></div>
+        <div id="storeMapFallback" class="store-map-fallback">
+          <span>📍 CARGANDO MAPA&hellip;</span>
+        </div>
       </div>
       <a href="#" id="mapModalExternalLink" target="_blank" class="btn-pedir-header" style="display:inline-block;">ABRIR EN GOOGLE MAPS &rarr;</a>
     </div>
   </div>
 
-  <!-- Modal Lookbook CP x Carhartt -->
-  <div class="cp-modal" id="carharttModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 12px;">CP &times; CARHARTT 2026</h3>
-      <img src="assets/img/colab_carhartt.jpg" alt="Colab Streetwear" style="border-radius: 6px; margin-bottom: 16px;">
-      <p style="font-size: 0.95rem; color: var(--cp-text); line-height: 1.5; margin-bottom: 16px;">
-        Cápsula streetwear de edición limitada inspirada en el trabajo duro en la cocina y la cultura de la calle. Confeccionada en algodón pesado boxy fit de 280g con serigrafía táctil al agua.
-      </p>
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span style="font-family: var(--font-display); font-size: 1.6rem;">$120.000 COP</span>
-        <button class="btn-pedir-header" onclick="cpCart.addItem({id:'merch-tee', name:'T-SHIRT CP x CARHARTT 2026', price:120000, image:'assets/img/colab_carhartt.jpg'}); closeModal('carharttModal'); cpCart.openCart();">COMPRAR AHORA &rarr;</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modales de Colaboraciones Pasadas -->
+  <!-- Modal Colab CP x Jim Pluk -->
   <div class="cp-modal" id="colabPlukModal">
     <div class="cp-modal-content">
       <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red);">CP &times; JIM PLUK (2025)</h3>
-      <img src="assets/img/colab_pluk.png" alt="Jim Pluk Colab" style="margin: 16px 0; border-radius: 6px;">
+      <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red);">CP &times; JIM PLUK</h3>
+      <img src="assets/img/icon-cp-stamp.svg" alt="" style="width: 90px; margin: 16px 0;">
       <p style="color:var(--cp-muted);">Gorras trucker bordadas y empaques intervenidos con las icónicas criaturas ilustradas por el artista santandereano Jim Pluk.</p>
-    </div>
-  </div>
-
-  <div class="cp-modal" id="colabNorteModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red);">CP &times; CERVEZA NORTE (2025)</h3>
-      <img src="assets/img/colab_norte.png" alt="Cerveza Norte" style="margin: 16px 0; border-radius: 6px;">
-      <p style="color:var(--cp-muted);">Lata conmemorativa Session IPA elaborada exclusivamente para maridar con la carne smash y queso madurado de Cuatro Paredes.</p>
-    </div>
-  </div>
-
-  <div class="cp-modal" id="colabTostaoModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red);">CP &times; TOSTAO (2024)</h3>
-      <img src="assets/img/colab_tostao.png" alt="Tostao Colab" style="margin: 16px 0; border-radius: 6px;">
-      <p style="color:var(--cp-muted);">Alianza para desarrollar la salsa Bourbon Panela con café de origen tostado medio y pan de masa madre especial.</p>
     </div>
   </div>
 
@@ -861,7 +600,7 @@
     <div class="cp-modal-content">
       <button class="modal-close-trigger">&times;</button>
       <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 12px;">BURGER DEALERS</h3>
-      <img src="assets/img/world_dealers.png" alt="Burger Dealers" style="border-radius: 6px; margin-bottom: 16px;">
+      <img src="assets/img/icon-smiley-wink.svg" alt="" style="width: 60px; margin-bottom: 16px;">
       <p style="color: var(--cp-text); line-height: 1.5;">
         El movimiento underground de Cuatro Paredes. Noches secretas de pop-up gastronómico, DJ sets en vinilo, recetas experimentales no disponibles en el menú habitual y comunidad de amantes del smash.
       </p>
@@ -873,9 +612,9 @@
     <div class="cp-modal-content">
       <button class="modal-close-trigger">&times;</button>
       <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 12px;">MERCH CUATRO PAREDES</h3>
-      <img src="assets/img/world_merch.png" alt="Merch" style="border-radius: 6px; margin-bottom: 16px;">
+      <img src="assets/img/icon-cp-stamp.svg" alt="" style="width: 90px; margin-bottom: 16px;">
       <p style="margin-bottom: 16px;">Gorras 'Dad Hat' bordadas, vasos térmicos de acero inoxidable y bandejas metálicas con el sello oficial.</p>
-      <button class="btn-pedir-header" onclick="cpCart.addItem({id:'merch-cap', name:'GORRA CP CLASSIC WHITE', price:65000, image:'assets/img/world_merch.png'}); closeModal('merchModal'); cpCart.openCart();">AGREGAR GORRA AL PEDIDO ($65.000) &rarr;</button>
+      <button class="btn-pedir-header" onclick="cpCart.addItem({id:'merch-cap', name:'GORRA CP CLASSIC WHITE', price:65000, image:'assets/img/icon-cp-stamp.svg'}); closeModal('merchModal'); cpCart.openCart();">AGREGAR GORRA AL PEDIDO ($65.000) &rarr;</button>
     </div>
   </div>
 
@@ -884,7 +623,7 @@
     <div class="cp-modal-content">
       <button class="modal-close-trigger">&times;</button>
       <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 12px;">OBJETOS & STICKERS</h3>
-      <img src="assets/img/world_objetos.png" alt="Objetos" style="border-radius: 6px; margin-bottom: 16px;">
+      <img src="assets/img/icon-smiley.svg" alt="" style="width: 60px; margin-bottom: 16px;">
       <p>Sticker packs vinílicos resistentes al agua, llaveros abrebotellas de bronce y pins metálicos coleccionables para cada temporada.</p>
     </div>
   </div>
@@ -901,39 +640,6 @@
     </div>
   </div>
 
-  <!-- Modal Registro CP Club -->
-  <div class="cp-modal" id="clubRegisterModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 8px;">ÚNETE AL CP CLUB</h3>
-      <p style="color: var(--cp-muted); font-size: 0.95rem; margin-bottom: 20px;">Recibe tu tarjeta digital, acumula puntos en cada mordida y reclama tu burger de cumpleaños.</p>
-      <form onsubmit="event.preventDefault(); cpCart.showToast('¡Bienvenido al CP Club! Tu tarjeta digital ha sido activada.'); closeModal('clubRegisterModal');">
-        <input type="text" class="cart-input" placeholder="Nombre completo" required style="margin-bottom: 12px;">
-        <input type="email" class="cart-input" placeholder="Correo electrónico" required style="margin-bottom: 12px;">
-        <input type="tel" class="cart-input" placeholder="Número de celular (WhatsApp)" required style="margin-bottom: 12px;">
-        <input type="date" class="cart-input" title="Fecha de cumpleaños" placeholder="Fecha de cumpleaños" required style="margin-bottom: 20px;">
-        <button type="submit" class="btn-pedir-header" style="width: 100%;">CREAR MI MEMBRESÍA &rarr;</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Regalo Tarjeta -->
-  <div class="cp-modal" id="giftCardModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 8px;">ENVIAR TARJETA DE REGALO</h3>
-      <p style="color: var(--cp-muted); font-size: 0.95rem; margin-bottom: 20px;">Un código digital canjeable en sedes de Bucaramanga y San Gil o a domicilio.</p>
-      <form onsubmit="event.preventDefault(); const val = document.getElementById('modalGiftAmount').value; cpCart.addItem({id:'tarjeta-regalo', name:'TARJETA REGALO CP ('+val+')', price:50000, image:'assets/img/gift_card.jpg'}); closeModal('giftCardModal'); cpCart.openCart();">
-        <label style="font-size:0.85rem; font-weight:700; display:block; margin-bottom:4px;">MONTO DE LA TARJETA:</label>
-        <input type="text" id="modalGiftAmount" class="cart-input" readonly style="margin-bottom: 12px; font-weight: 800; font-size: 1.2rem;">
-        <input type="text" class="cart-input" placeholder="Nombre de quien recibe" required style="margin-bottom: 12px;">
-        <input type="tel" class="cart-input" placeholder="WhatsApp del destinatario" required style="margin-bottom: 12px;">
-        <textarea class="cart-input" placeholder="Mensaje personalizado (opcional)" style="margin-bottom: 20px; height: 80px;"></textarea>
-        <button type="submit" class="btn-pedir-header" style="width: 100%;">PROCEDER AL PAGO &rarr;</button>
-      </form>
-    </div>
-  </div>
-
   <!-- Modal RSVP Eventos -->
   <div class="cp-modal" id="eventModal">
     <div class="cp-modal-content">
@@ -946,32 +652,6 @@
         <input type="tel" class="cart-input" placeholder="WhatsApp" required style="margin-bottom: 20px;">
         <button type="submit" class="btn-pedir-header" style="width: 100%;">CONFIRMAR MI CUPO &rarr;</button>
       </form>
-    </div>
-  </div>
-
-  <!-- Modal Ver Todos los Eventos -->
-  <div class="cp-modal" id="allEventsModal">
-    <div class="cp-modal-content">
-      <button class="modal-close-trigger">&times;</button>
-      <h3 class="font-display" style="font-size: 2.2rem; color: var(--cp-red); margin-bottom: 16px;">CALENDARIO COMPLETO 2026</h3>
-      <div style="display:flex; flex-direction:column; gap:16px;">
-        <div style="border-bottom:1px solid #DDD; padding-bottom:10px;">
-          <h4 class="font-display" style="font-size:1.3rem;">BURGER DEALERS • BUCARAMANGA</h4>
-          <span style="font-size:0.85rem; color:#777;">Sáb, 14 Jun 2026 • 7:00 p.m. • Terraza El Prado</span>
-        </div>
-        <div style="border-bottom:1px solid #DDD; padding-bottom:10px;">
-          <h4 class="font-display" style="font-size:1.3rem;">JUEVES DE AJEDREZ & SMASH</h4>
-          <span style="font-size:0.85rem; color:#777;">Jue, 19 Jun 2026 • 6:00 p.m. • Cra 35 #37-46</span>
-        </div>
-        <div style="border-bottom:1px solid #DDD; padding-bottom:10px;">
-          <h4 class="font-display" style="font-size:1.3rem;">LANZAMIENTO TEMPORADA • SAN GIL</h4>
-          <span style="font-size:0.85rem; color:#777;">Vie, 27 Jun 2026 • 7:00 p.m. • Centro San Gil</span>
-        </div>
-        <div style="border-bottom:1px solid #DDD; padding-bottom:10px;">
-          <h4 class="font-display" style="font-size:1.3rem;">NOCHE DE VINILOS & DOBLES</h4>
-          <span style="font-size:0.85rem; color:#777;">Sáb, 05 Jul 2026 • 8:00 p.m. • Bucaramanga</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -996,7 +676,7 @@
       <button class="modal-close-trigger">&times;</button>
       <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red); margin-bottom: 12px;">TÉRMINOS Y CONDICIONES</h3>
       <p style="font-size: 0.9rem; color: var(--cp-muted); line-height: 1.6;">
-        Los precios publicados en este sitio web están expresados en pesos colombianos (COP) e incluyen los impuestos de ley aplicables. El tiempo de entrega puede variar según la demanda y condiciones climáticas en Bucaramanga y San Gil. Las ediciones de temporada están sujetas a disponibilidad de existencias diarias.
+        Los precios publicados en este sitio web están expresados en pesos colombianos (COP) e incluyen los impuestos de ley aplicables. El tiempo de entrega puede variar según la demanda y condiciones climáticas en Bucaramanga. Las ediciones de temporada están sujetas a disponibilidad de existencias diarias.
       </p>
     </div>
   </div>
@@ -1007,7 +687,7 @@
       <button class="modal-close-trigger">&times;</button>
       <h3 class="font-display" style="font-size: 2rem; color: var(--cp-red); margin-bottom: 12px;">POLÍTICA DE PRIVACIDAD</h3>
       <p style="font-size: 0.9rem; color: var(--cp-muted); line-height: 1.6;">
-        En Cuatro Paredes tratamos tus datos de contacto con absoluta reserva conforme a la Ley 1581 de 2012 de Protección de Datos Personales en Colombia. Tu número de teléfono y dirección solo se emplean para la gestión y despacho oportuno de tus pedidos y beneficios del CP Club.
+        En Cuatro Paredes tratamos tus datos de contacto con absoluta reserva conforme a la Ley 1581 de 2012 de Protección de Datos Personales en Colombia. Tu número de teléfono y dirección solo se emplean para la gestión y despacho oportuno de tus pedidos.
       </p>
     </div>
   </div>
@@ -1023,5 +703,6 @@
   <script src="js/cart.js"></script>
   <script src="js/season-archive.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/store-map.js"></script>
 </body>
 </html>

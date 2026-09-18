@@ -22,7 +22,10 @@
   }
 
   .menu-layout {
-    grid-template-columns: 1fr;
+    /* minmax(0, 1fr) en vez de 1fr: si no, la pista del grid crece para
+       encajar el ancho mínimo del carrusel de categorías (ver abajo) y
+       toda la sección de menú se desborda horizontalmente en mobile. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
 
@@ -70,7 +73,9 @@
   }
 
   .archivo-layout {
-    grid-template-columns: 1fr;
+    /* Mismo caso que .menu-layout: minmax(0, 1fr) evita que la pista del
+       grid crezca para encajar el carrusel horizontal de años. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .archivo-years-col {
@@ -188,5 +193,27 @@
 
   .pedir-btn-group {
     grid-template-columns: 1fr;
+  }
+
+  /* Los modales del sistema (mapas, lookbooks, club, arcade) usan mucho
+     padding fijo pensado para escritorio; en celulares angostos eso deja
+     muy poco espacio de lectura, así que lo reducimos aquí. */
+  .cp-modal {
+    padding: 12px;
+  }
+
+  .cp-modal-content {
+    padding: 24px 20px;
+  }
+
+  .cp-modal-content h3 {
+    font-size: 1.5rem !important;
+  }
+
+  /* El botón "PEDIR AHORA" del header es redundante con el CTA del Hero
+     y compite por espacio con el carrito y el menú hamburguesa. Se limita
+     al header porque la misma clase se reutiliza en botones de modales. */
+  .header-actions .btn-pedir-header {
+    display: none;
   }
 }

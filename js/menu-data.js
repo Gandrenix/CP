@@ -1,232 +1,245 @@
-// Cuatro Paredes - Datos del Menú y Contenido
+// Cuatro Paredes - Datos del Menú y Contenido (Menú real 2026)
 
 const MENU_DATA = {
   burgers: [
     {
-      id: "clasica",
-      name: "CLÁSICA",
-      price: 22000,
-      description: "Pan artesanal, carne Angus, queso, lechuga, tomate, cebolla, salsa de la casa.",
-      image: "assets/img/burger_clasica.jpg",
+      id: "sencilla",
+      name: "SENCILLA",
+      price: 24900,
+      description: "Pan, queso, salsa, carne (130 gr), cebolla, tomate, lechuga.",
+      comboNote: "Combo con papas rústicas + Coca-Cola: $35.900",
+      image: "assets/img/burger_sencilla_combo.jpg",
       tag: "FAVORITA"
-    },
-    {
-      id: "cheese",
-      name: "CHEESE",
-      price: 24000,
-      description: "Pan artesanal, carne Angus, doble queso, lechuga, tomate, cebolla, salsa de la casa.",
-      image: "assets/img/antojo_cheese.png",
-      tag: "EXTRA QUESO"
     },
     {
       id: "doble",
       name: "DOBLE",
-      price: 28000,
-      description: "Doble carne Angus, doble queso, lechuga, tomate, cebolla, salsa de la casa.",
-      image: "assets/img/hero_burger.jpg",
-      tag: "DOBLE CARNE"
+      price: 34900,
+      description: "Pan, queso, salsa, doble carne (260 gr), cebolla, tomate, lechuga.",
+      comboNote: "Combo con papas rústicas + Coca-Cola: $44.000",
+      image: "assets/img/burger_sencilla_combo.jpg",
+      tag: "260 GR"
     },
     {
-      id: "especial",
-      name: "ESPECIAL",
-      price: 26000,
-      description: "Pan artesanal, carne Angus, queso, tocineta, cebolla caramelizada, salsa de la casa.",
-      image: "assets/img/antojo_especial.png",
-      tag: "TOCINETA CRUJIENTE"
+      id: "hot-sweet",
+      name: "HOT SWEET",
+      price: 27000,
+      description: "Pan, salsa, carne (125 gr), cebolla, tomate, lechuga, mermelada de jalapeños y tocineta.",
+      comboNote: "Combo + papas y bebida: $37.500 · Doble: $43.900",
+      image: "assets/img/burger_hot_sweet.jpg",
+      tag: "PICANTE"
+    },
+    {
+      id: "trufada",
+      name: "TRUFADA",
+      price: 29000,
+      description: "Pan, queso, carne, chutney de tomates, crumble de chorizo artesanal, cebolla morada picada y salsa trufada.",
+      comboNote: "Combo: $39.500 · Agranda a doble: $45.500",
+      image: "assets/img/burger_trufada.jpg",
+      tag: "EXPERIMENTO #1"
+    },
+    {
+      id: "azul-maple",
+      name: "AZUL MAPLE",
+      price: 29000,
+      description: "Pan de papa, carne (130 gr), dip de queso azul, cebolla caramelizada en miel de maple y queso mozzarella.",
+      comboNote: "Combo: $39.500 · Agranda a doble: $45.500",
+      image: "assets/img/burger_azul_maple.jpg",
+      tag: "NUEVA"
     }
   ],
-  sodas: [
+  papas: [
     {
-      id: "soda-maracuya",
-      name: "SODA MARACUYÁ & ALBAHACA",
-      price: 8000,
-      description: "Soda artesanal infusionada con pulpa fresca de maracuyá, sirope ligero de albahaca y hielo.",
-      image: "assets/img/event_burger.jpg",
-      tag: "ARTESANAL"
-    },
-    {
-      id: "soda-frutos-rojos",
-      name: "SODA FRUTOS ROJOS",
-      price: 8000,
-      description: "Mora silvestre, fresa y frambuesa con soda efervescente y toques cítricos de limón mandarino.",
-      image: "assets/img/pedir_fries.jpg",
-      tag: "REFRESCANTE"
-    },
-    {
-      id: "limonada-coco",
-      name: "LIMONADA DE COCO",
-      price: 9000,
-      description: "Crema de coco de la casa batida al momento con zumo de limón fresco y escarcha.",
-      image: "assets/img/event_burger.jpg",
-      tag: "CLÁSICO"
-    },
-    {
-      id: "coca-cola",
-      name: "COCA-COLA ORIGINAL 350ML",
-      price: 6000,
-      description: "Lata helada tradicional para acompañar la mejor burger.",
-      image: "assets/img/pedir_fries.jpg",
-      tag: "ORIGINAL"
-    }
-  ],
-  cookies: [
-    {
-      id: "cookie-choco",
-      name: "CHOCO CHIP ARTESANAL",
-      price: 7000,
-      description: "Galleta horneada a diario con trozos de chocolate oscuro 70% Santander y centro suave.",
-      image: "assets/img/antojo_doble.png",
-      tag: "RECIÉN HORNEADA"
-    },
-    {
-      id: "cookie-redvelvet",
-      name: "RED VELVET COOKIE",
-      price: 8000,
-      description: "Masa aterciopelada roja rellena de crema de queso blanco derretido en el centro.",
-      image: "assets/img/antojo_especial.png",
-      tag: "FAVORITO DULCE"
-    },
-    {
-      id: "cookie-cream",
-      name: "COOKIES & CREAM CRUNCH",
-      price: 8000,
-      description: "Galleta con trozos crocantes de galleta negra y chocolate blanco tostado.",
-      image: "assets/img/antojo_clasica.png",
-      tag: "CRUJIENTE"
-    }
-  ],
-  salsas: [
-    {
-      id: "salsa-cp",
-      name: "SALSA CUATRO PAREDES (2 OZ)",
-      price: 4000,
-      description: "Nuestra salsa secreta ahumada con especias de la casa, ligeramente dulce y cremosa.",
-      image: "assets/img/meltdown_burger.jpg",
+      id: "papas-trufadas",
+      name: "PAPAS TRUFADAS",
+      price: 24900,
+      description: "Papa rústica (300 gr), tocineta crocante, cebollín picado, queso parmesano, salsa trufada y mermelada de tomate.",
+      comboNote: "Súmalas a cualquier combo por $5.500 más",
+      image: "assets/img/papas_trufadas.jpg",
       tag: "DE LA CASA"
     },
     {
-      id: "salsa-jalapeno",
-      name: "MAYO JALAPEÑO",
-      price: 4000,
-      description: "Mayonesa emulsionada con jalapeños asados al carbón y un toque de cilantro silvestre.",
-      image: "assets/img/hero_burger.jpg",
-      tag: "PICANTE MEDIO"
+      id: "papas-cp",
+      name: "PAPAS CP",
+      price: 22000,
+      description: "Papa rústica, tocineta crispy, salsa de pepinillos, doritos triturados y cebolla picada.",
+      image: "assets/img/papas_trufadas.jpg",
+      tag: "PARA COMPARTIR"
     },
     {
-      id: "salsa-bbq",
-      name: "BBQ BOURBON & PANELA",
-      price: 4000,
-      description: "Reducción artesanal de panela santandereana, bourbon ahumado y tomate asado.",
-      image: "assets/img/burger_clasica.jpg",
-      tag: "DULCE AHUMADA"
+      id: "papas-rusticas",
+      name: "PAPAS RÚSTICAS",
+      price: 6500,
+      description: "Nuestra papa de la casa, cortada rústica y frita al punto.",
+      image: "assets/img/papas_trufadas.jpg",
+      tag: "CLÁSICAS"
+    }
+  ],
+  adiciones: [
+    {
+      id: "add-carne",
+      name: "CARNE (130 GR)",
+      price: 10000,
+      description: "Una porción extra de carne para cualquier burger.",
+      image: "assets/img/burger_sencilla_combo.jpg"
+    },
+    {
+      id: "add-pollo",
+      name: "POLLO",
+      price: 9000,
+      description: "Pollo Jhonny Wings.",
+      image: "assets/img/burger_hot_sweet.jpg"
+    },
+    {
+      id: "add-enchulado",
+      name: "ENCHULADO",
+      price: 5000,
+      description: "Extra de nuestra salsa insignia.",
+      image: "assets/img/burger_trufada.jpg"
+    },
+    {
+      id: "add-tocineta",
+      name: "TOCINETA",
+      price: 4500,
+      description: "Tocineta crocante extra.",
+      image: "assets/img/papas_trufadas.jpg"
+    },
+    {
+      id: "add-queso",
+      name: "QUESO",
+      price: 4500,
+      description: "Queso extra derretido.",
+      image: "assets/img/burger_azul_maple.jpg"
+    },
+    {
+      id: "add-pepinillos",
+      name: "PEPINILLOS",
+      price: 2000,
+      description: "Porción extra de pepinillos.",
+      image: "assets/img/burger_sencilla_combo.jpg"
+    },
+    {
+      id: "galleta",
+      name: "GALLETA CHIPS DE CHOCOLATE",
+      price: 6000,
+      description: "Galleta artesanal de chips de chocolate, recién horneada.",
+      image: "assets/img/galleta_chocolate.jpg",
+      tag: "POSTRE"
+    }
+  ],
+  bebidas: [
+    {
+      id: "agua",
+      name: "AGUA",
+      price: 7000,
+      description: "Botella de agua.",
+      image: "assets/img/mesa_combo_varios.jpg"
+    },
+    {
+      id: "coca-cola-250",
+      name: "COCA-COLA (250 ML)",
+      price: 5000,
+      description: "Presentación personal en vidrio.",
+      image: "assets/img/mesa_combo_varios.jpg"
+    },
+    {
+      id: "coca-cola-400",
+      name: "COCA-COLA (400 ML)",
+      price: 7000,
+      description: "Presentación grande.",
+      image: "assets/img/mesa_combo_varios.jpg"
+    },
+    {
+      id: "coca-cola-zero",
+      name: "COCA-COLA ZERO (400 ML)",
+      price: 7000,
+      description: "Sin azúcar.",
+      image: "assets/img/mesa_combo_varios.jpg"
+    },
+    {
+      id: "soda",
+      name: "SODA",
+      price: 7000,
+      description: "Soda de la casa.",
+      image: "assets/img/mesa_combo_varios.jpg"
+    },
+    {
+      id: "soda-roja",
+      name: "SODA ROJA",
+      price: 7000,
+      description: "Bebida refrescante sabor a cereza.",
+      image: "assets/img/mesa_combo_varios.jpg",
+      tag: "CEREZA"
+    },
+    {
+      id: "soda-azul",
+      name: "SODA AZUL",
+      price: 7000,
+      description: "Bebida refrescante sabor cítrico con un toque de albahaca.",
+      image: "assets/img/mesa_combo_varios.jpg",
+      tag: "CÍTRICO"
+    }
+  ],
+  combos: [
+    {
+      id: "combo-para-dos",
+      name: "COMBO PARA DOS",
+      price: 67000,
+      description: "2 burgers sencillas + 2 bebidas + papas CP.",
+      image: "assets/img/burger_sencilla_combo.jpg",
+      tag: "PARA 2"
+    },
+    {
+      id: "combo-para-varios",
+      name: "COMBO PARA VARIOS",
+      price: 125000,
+      description: "4 burgers sencillas + 4 sodas + 2 papas CP.",
+      image: "assets/img/mesa_combo_varios.jpg",
+      tag: "PARA EL PARCHE"
     }
   ]
 };
 
 const SEASON_ITEMS = [
   {
-    id: "meltdown",
-    number: "01 / 04",
-    name: "THE MELTDOWN",
+    id: "azul-maple",
+    number: "01 / 02",
+    name: "AZUL MAPLE",
     year: "2026",
-    price: 27000,
-    description: "Carne Angus, queso cheddar, salsa de jalapeño, cebolla caramelizada, pan artesanal.",
-    image: "assets/img/meltdown_burger.jpg",
-    note: "Disponible hasta agotar existencias."
-  },
-  {
-    id: "la-santa",
-    number: "02 / 04",
-    name: "LA SANTA",
-    year: "2025",
-    price: 28500,
-    description: "Carne Angus madurada 21 días, queso brie fundido, mermelada de tocineta ahumada y rúgula fresca.",
-    image: "assets/img/hero_burger.jpg",
-    note: "Edición especial limitada."
-  },
-  {
-    id: "tropical",
-    number: "03 / 04",
-    name: "TROPICAL",
-    year: "2024",
-    price: 26000,
-    description: "Carne Angus, piña caramelizada a la brasa con canela, queso costeño asado y salsa tartara de la casa.",
-    image: "assets/img/event_burger.jpg",
-    note: "Inspirada en el Caribe santandereano."
-  },
-  {
-    id: "la-noche",
-    number: "04 / 04",
-    name: "LA NOCHE",
-    year: "2023",
     price: 29000,
-    description: "Pan brioche negro artesanal, doble carne Angus, queso pepper jack fundido y alioli de ajo negro.",
-    image: "assets/img/burger_clasica.jpg",
-    note: "La favorita del archivo histórico."
+    description: "Pan de papa, carne, dip de queso azul, cebolla caramelizada en miel de maple y queso mozzarella. Nuestro segundo experimento.",
+    image: "assets/img/burger_azul_maple.jpg",
+    note: "Agranda a doble por $45.500."
+  },
+  {
+    id: "trufada",
+    number: "02 / 02",
+    name: "TRUFADA",
+    year: "2026",
+    price: 29000,
+    description: "Pan, queso, carne, chutney de tomates, crumble de chorizo artesanal, cebolla morada picada y salsa trufada. Experimento #1.",
+    image: "assets/img/burger_trufada.jpg",
+    note: "Agranda a doble por $45.500."
   }
 ];
-
-const ARCHIVE_PHOTOS = {
-  "2026": [
-    { title: "The Meltdown Launch", image: "assets/img/meltdown_burger.jpg", tag: "TEMPORADA" },
-    { title: "CP Cap Black Edition", image: "assets/img/world_merch.png", tag: "MERCH" },
-    { title: "Streetwear Drop Artwork", image: "assets/img/colab_carhartt.jpg", tag: "COLAB" },
-    { title: "Double Smash Station", image: "assets/img/hero_burger.jpg", tag: "COCINA" },
-    { title: "Late Night at El Prado", image: "assets/img/store_bucaramanga.jpg", tag: "BUCARAMANGA" },
-    { title: "San Gil Centro Spot", image: "assets/img/store_sangil.jpg", tag: "SAN GIL" }
-  ],
-  "2025": [
-    { title: "Colab Jim Pluk Trucker", image: "assets/img/colab_pluk.png", tag: "ARTE" },
-    { title: "Cerveza Norte × CP", image: "assets/img/colab_norte.png", tag: "BEBIDA" },
-    { title: "Burger Dealers Session 03", image: "assets/img/world_dealers.png", tag: "EVENTO" },
-    { title: "La Santa Special Edition", image: "assets/img/burger_clasica.jpg", tag: "BURGER" },
-    { title: "Arcade Retro Tournament", image: "assets/img/world_juegos.png", tag: "COMUNIDAD" },
-    { title: "Patio Night Vibes", image: "assets/img/footer_bg.jpg", tag: "NOCHES" }
-  ],
-  "2024": [
-    { title: "Tostao × CP Café & Bites", image: "assets/img/colab_tostao.png", tag: "COLAB" },
-    { title: "Tropical Burger Debut", image: "assets/img/event_burger.jpg", tag: "TEMPORADA" },
-    { title: "Sticker Pack Vol. 1", image: "assets/img/world_objetos.png", tag: "OBJETOS" },
-    { title: "Opening San Gil Plaza", image: "assets/img/store_sangil.jpg", tag: "EXPANSIÓN" },
-    { title: "CP Crew Bucaramanga", image: "assets/img/world_eventos.png", tag: "EQUIPO" },
-    { title: "First Batch Fries", image: "assets/img/pedir_fries.jpg", tag: "CLÁSICOS" }
-  ],
-  "2023": [
-    { title: "Day One Smash Burger", image: "assets/img/hero_burger.jpg", tag: "ORIGEN" },
-    { title: "La Noche Black Bun", image: "assets/img/burger_clasica.jpg", tag: "INNOVACIÓN" },
-    { title: "First Red Membership Card", image: "assets/img/club_card_hand.jpg", tag: "CP CLUB" },
-    { title: "The Corner Awning", image: "assets/img/footer_bg.jpg", tag: "SEDE 01" },
-    { title: "Burger Dealers Kickoff", image: "assets/img/world_dealers.png", tag: "INICIOS" },
-    { title: "Late Night Parchado", image: "assets/img/store_bucaramanga.jpg", tag: "CULTURA" }
-  ]
-};
 
 const EVENTS_DATA = [
   {
     id: "event-1",
     title: "BURGER DEALERS",
-    date: "Sáb, 14 Jun 2026",
+    date: "Próxima fecha por confirmar",
     time: "7:00 p.m.",
-    location: "Bucaramanga • Cra 35 #37-46, El Prado",
-    description: "Noche de beats en vivo, vinilos, burgers fuera de carta preparadas en vivo y cerveza artesanal fría.",
-    badge: "SOLD OUT PRONTO"
+    location: "Bucaramanga",
+    description: "El movimiento underground de Cuatro Paredes: pop-ups, música en vivo y recetas fuera de carta.",
+    badge: "COMUNIDAD"
   },
   {
     id: "event-2",
     title: "JUEVES DE AJEDREZ",
-    date: "Jue, 19 Jun 2026",
+    date: "Todos los jueves",
     time: "6:00 p.m.",
-    location: "Bucaramanga • Terraza El Prado",
-    description: "Torneo abierto de ajedrez rápido. Tableros disponibles, burgers dobles y premios especiales para los finalistas.",
-    badge: "INSCRIPCIÓN GRATIS"
-  },
-  {
-    id: "event-3",
-    title: "LANZAMIENTO TEMPORADA",
-    date: "Vie, 27 Jun 2026",
-    time: "7:00 p.m.",
-    location: "San Gil • Cra 10 #10-62, Centro",
-    description: "Presentación oficial de la nueva receta de temporada junto al equipo fundador de Cuatro Paredes con degustaciones y música.",
-    badge: "ACCESO CP CLUB"
+    location: "Bucaramanga",
+    description: "Nuestro día especial de la semana: tableros disponibles, burgers dobles y buen ambiente.",
+    badge: "TODAS LAS SEMANAS"
   }
 ];

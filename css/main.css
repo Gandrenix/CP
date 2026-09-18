@@ -2,25 +2,31 @@
    CUATRO PAREDES - ESTILOS PRINCIPALES Y VARIABLES GLOBALES
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Permanent+Marker&family=Caveat:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  /* Paleta de Colores Oficial Cuatro Paredes */
-  --cp-red: #E31B23;
-  --cp-red-hover: #C5161D;
-  --cp-red-dark: #9F0F15;
-  --cp-red-glow: rgba(227, 27, 35, 0.35);
-  
-  --cp-cream: #F5EFEB;
-  --cp-cream-soft: #F9F6F2;
-  --cp-cream-card: #ECE5DE;
-  --cp-cream-dark: #E2DBD2;
-  
+  /* Paleta de Colores Oficial Cuatro Paredes (extraída de los valores RGB
+     vectoriales reales del menú impreso .ai, no de una captura de pantalla) */
+  --cp-red: #EE282F;
+  --cp-red-hover: #D01F26;
+  --cp-red-dark: #A5171C;
+  --cp-red-glow: rgba(238, 40, 47, 0.35);
+
+  --cp-cream: #FFF8E9;
+  --cp-cream-soft: #FFFBF2;
+  --cp-cream-card: #F3EADB;
+  --cp-cream-dark: #E8DCC5;
+
+  /* Acento menta/celeste: usado por CP en la Azul Maple y los combos familiares */
+  --cp-teal: #B3DDDE;
+  --cp-teal-dark: #8FC6C7;
+  --cp-teal-deep: #2E5556;
+
   --cp-black: #111111;
   --cp-dark: #161616;
   --cp-dark-card: #1E1E1E;
   --cp-dark-border: #2A2A2A;
-  
+
   --cp-white: #FFFFFF;
   --cp-border: #DDD6CD;
   --cp-text: #111111;
@@ -31,6 +37,7 @@
   --font-display: 'Bebas Neue', 'Impact', sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-hand: 'Caveat', 'Permanent Marker', cursive;
+  --font-mono: 'Space Mono', 'IBM Plex Mono', monospace;
 
   /* Elevaciones y Transiciones */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);

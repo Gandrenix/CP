@@ -3,10 +3,9 @@
 class CuatroParedesCart {
   constructor() {
     this.items = [];
-    this.city = 'BUCARAMANGA'; // BUCARAMANGA or SAN GIL
+    this.city = 'BUCARAMANGA';
     this.mode = 'DOMICILIO';   // DOMICILIO or RECOGER
     this.phoneBga = '573170000000';
-    this.phoneSanGil = '573180000000';
     this.deliveryFee = 5000;
     
     this.loadFromStorage();
@@ -248,8 +247,7 @@ class CuatroParedesCart {
     orderText += `💬 *Notas:* ${customerNotes}\n\n`;
     orderText += `_Hecho para el antojo. ¡Parchado en Cuatro Paredes!_`;
 
-    const targetPhone = this.city === 'SAN GIL' ? this.phoneSanGil : this.phoneBga;
-    const url = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(orderText)}`;
+    const url = `https://api.whatsapp.com/send?phone=${this.phoneBga}&text=${encodeURIComponent(orderText)}`;
     
     window.open(url, '_blank');
   }
@@ -293,4 +291,7 @@ class CuatroParedesCart {
 let cpCart;
 document.addEventListener('DOMContentLoaded', () => {
   cpCart = new CuatroParedesCart();
+  // `let` a nivel de script no crea una propiedad en window, y app.js /
+  // season-archive.js consultan window.cpCart antes de formatear precios.
+  window.cpCart = cpCart;
 });

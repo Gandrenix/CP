@@ -6,3 +6,9 @@ desktop.ini
 # Archivos temporales de extracción
 mockup_panels/
 *.log
+*-autosave.*
+
+# Editores e IDEs
+.claude/
+.vscode/
+
