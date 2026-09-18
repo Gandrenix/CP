@@ -1810,6 +1810,34 @@
   transform: translateX(-4px);
 }
 
+/* El bloque derecho del footer (marca, ciudad, redes) se veía chico en
+   pantallas de escritorio comparado con el "¿HAMBRE?" ya agrandado al
+   lado. Solo desktop -- en mobile se queda exactamente como está. */
+@media (min-width: 1025px) {
+  .footer-brand-title {
+    font-size: 3.2rem;
+  }
+
+  .footer-cities {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+  }
+
+  .footer-social-links {
+    gap: 16px;
+  }
+
+  .footer-social-link {
+    font-size: 1.3rem;
+    gap: 12px;
+  }
+
+  .footer-social-link svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
 .footer-bottom-bar {
   border-top: 1px solid var(--cp-dark-border);
   padding-top: 24px;
