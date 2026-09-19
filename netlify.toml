@@ -18,17 +18,33 @@
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    # "immutable" le dice al navegador "nunca vuelvas a preguntar por este
+    # archivo en un año, ni siquiera para revisar si cambió" -- correcto
+    # SOLO si el nombre de archivo cambia cada vez que cambia el
+    # contenido. Acá no es el caso: en esta sesión ya reemplazamos el
+    # contenido de assets/img/store_bucaramanga.jpg (la foto vieja por la
+    # de El Prado) manteniendo el mismo nombre. Cualquiera que haya
+    # visitado el sitio antes de ese cambio seguirá viendo la foto vieja
+    # hasta por un año, sin excepción. Mismo arreglo que en css/js.
+    Cache-Control = "public, no-cache, must-revalidate"
 
 [[headers]]
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400, must-revalidate"
+    # "no-cache" no significa "no guardar" -- el navegador SÍ guarda el
+    # archivo, pero está obligado a preguntarle al servidor en cada carga
+    # si sigue vigente (revalidación condicional, normalmente resuelta con
+    # un 304 rápido) antes de usarlo. Con el "max-age=86400" anterior, un
+    # celular que hubiera cacheado main.css el día del cambio de fuente
+    # seguía usando esa copia vieja hasta 24h después SIN volver a
+    # preguntarle al servidor -- por eso cargaba bien en PC (caché nueva)
+    # y mal en el celular (caché de hasta un día antes).
+    Cache-Control = "public, no-cache, must-revalidate"
 
 [[headers]]
   for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=86400, must-revalidate"
+    Cache-Control = "public, no-cache, must-revalidate"
 
 # Redirección para SPA / navegación limpia
 [[redirects]]
