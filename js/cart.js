@@ -24,7 +24,7 @@ class CuatroParedesCart {
     this.cartSubtotalElem = document.getElementById('cartSubtotal');
     this.cartDeliveryFeeElem = document.getElementById('cartDeliveryFee');
     this.cartTotalElem = document.getElementById('cartTotal');
-    this.whatsappOrderBtn = document.getElementById('whatsappOrderBtn');
+    this.chatOrderBtn = document.getElementById('chatOrderBtn');
     this.emptyCartState = document.getElementById('emptyCartState');
     this.cartSummaryBlock = document.getElementById('cartSummaryBlock');
   }
@@ -40,8 +40,8 @@ class CuatroParedesCart {
       this.cartBackdrop.addEventListener('click', () => this.closeCart());
     }
 
-    if (this.whatsappOrderBtn) {
-      this.whatsappOrderBtn.addEventListener('click', () => this.checkoutWhatsApp());
+    if (this.chatOrderBtn) {
+      this.chatOrderBtn.addEventListener('click', () => this.checkoutChat());
     }
 
     // Escuchar cambios de ciudad y modo en el panel Pedir
@@ -208,6 +208,43 @@ class CuatroParedesCart {
       this.cartDeliveryFeeElem.textContent = (this.mode === 'DOMICILIO') ? this.formatMoney(fee) : 'GRATIS (Recoger)';
     }
     if (this.cartTotalElem) this.cartTotalElem.textContent = this.formatMoney(total);
+  }
+
+  // Datos del pedido en el formato que entiende CPChat (js/chat). El carrito
+  // solo describe el pedido; cómo viaja al local es asunto del módulo de chat.
+  getOrderSnapshot() {
+    const field = (id) => document.getElementById(id)?.value.trim() || '';
+    return {
+      city: this.city,
+      mode: this.mode,
+      name: field('checkoutCustomerName'),
+      phone: field('checkoutCustomerPhone'),
+      address: field('checkoutCustomerAddress'),
+      notes: field('checkoutCustomerNotes'),
+      items: this.items.map(i => ({ name: i.name, quantity: i.quantity })),
+      subtotal: this.getSubtotal(),
+      deliveryFee: this.mode === 'DOMICILIO' ? this.deliveryFee : 0,
+      total: this.getTotal()
+    };
+  }
+
+  async checkoutChat() {
+    // Sin el módulo de chat (script bloqueado), se conserva el flujo viejo.
+    if (!window.CPChat || !window.CPChat.sendOrder) {
+      this.checkoutWhatsApp();
+      return;
+    }
+    const btn = this.chatOrderBtn;
+    if (btn) btn.disabled = true;
+    const result = await window.CPChat.sendOrder(this.getOrderSnapshot());
+    if (btn) btn.disabled = false;
+
+    if (!result.ok) {
+      this.showToast(result.error);
+      return;
+    }
+    this.closeCart();
+    this.showToast('¡Pedido enviado! Te respondemos por el chat.');
   }
 
   checkoutWhatsApp() {
