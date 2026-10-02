@@ -5,7 +5,7 @@ class CuatroParedesCart {
     this.items = [];
     this.city = 'BUCARAMANGA';
     this.mode = 'DOMICILIO';   // DOMICILIO or RECOGER
-    this.phoneBga = '573170000000';
+    this.phoneBga = '573178705555';
     this.deliveryFee = 5000;
     
     this.loadFromStorage();
