@@ -1,0 +1,27 @@
+# Cloudflare: archivos del repositorio que NO se publican en el sitio.
+# Solo debe salir lo que el sitio usa: index.html, css/, js/ y assets/.
+# (sintaxis de .gitignore)
+
+# Material interno del restaurante (planeación, menús, logos fuente)
+Material restaurante/
+Material/
+
+# Trabajo de portafolio, mockups y fuentes originales
+Portafolio/
+mockup_panels/
+FontsSupply/
+
+# Imágenes sueltas de la raíz que el sitio no referencia
+CuatroParedesv1.png
+ChatGPT*
+
+# Configuración y documentación del repo
+README.md
+netlify.toml
+wrangler.jsonc
+.assetsignore
+.gitignore
+.claude/
+.git
+node_modules/
+.wrangler/

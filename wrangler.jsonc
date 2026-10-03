@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cp",
+  "compatibility_date": "2026-10-01",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    // Sitio de una sola página: cualquier ruta desconocida devuelve index.html
+    // (equivale a la redirección /* -> /index.html de netlify.toml).
+    "not_found_handling": "single-page-application"
+  }
+}
