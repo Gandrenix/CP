@@ -269,6 +269,16 @@ class CuatroParedesCart {
       this.setOrderStatus(result.error, result.fallbackUrl);
       return;
     }
+
+    // El pedido ya salió: se vacía el carrito (si no, el próximo pedido
+    // reenviaría estas mismas burgers) y se limpian las notas, que son de este
+    // pedido. Nombre, teléfono y dirección se conservan para el siguiente.
+    this.items = [];
+    this.saveToStorage();
+    this.render();
+    const notes = document.getElementById('checkoutCustomerNotes');
+    if (notes) notes.value = '';
+
     this.closeCart();
     this.showToast('¡Pedido enviado! Te respondemos por el chat.');
   }
