@@ -1,18 +1,38 @@
 /* ==========================================================================
-   CP CHAT - botón flotante, burbuja de invitación y aviso de respaldo.
-   El panel de conversación lo dibuja LiveConnect; esto es solo la capa de
+   CP CHAT - botón flotante pixel-art, burbuja de invitación y aviso de
+   respaldo. El panel de conversación lo dibuja LiveConnect; esto es la capa de
    marca alrededor. z-index 900: por debajo del header (1000) y del carrito
    (2000+), por encima del contenido.
+
+   Técnica (sin librerías ni imágenes): esquinas escalonadas con clip-path,
+   borde = capa negra + capa interior inset, y volumen 3D con una "base"
+   desplazada hacia abajo que se aplasta al presionar (botón de arcade).
    ========================================================================== */
 .cpchat {
+  /* Esquina escalonada de 2 pasos (exterior) y de 1 paso (interior, inset 4px) */
+  --px-outer: polygon(
+    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+  --px-inner: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 22px;
+  bottom: 24px;
   z-index: 900;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 22px;
+  /* Sombra dura estilo pixel: se ve sobre fondos claros y oscuros */
+  filter: drop-shadow(4px 5px 0 rgba(17, 17, 17, 0.28));
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -22,158 +42,400 @@
   pointer-events: none;
 }
 
+/* Con el panel de LiveConnect abierto (queda justo encima) el botón y la
+   burbuja se esconden; el aviso de falla, si lo hay, sigue a la vista. */
+.cpchat.is-chat-open .cpchat-launcher,
+.cpchat.is-chat-open .cpchat-bubble {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* El aviso de falla debe verse aunque el carrito (z-index 2000+) esté abierto */
+.cpchat.has-fail { z-index: 3000; }
+
+/* --------------------------------------------------------------------------
+   Botón flotante
+   -------------------------------------------------------------------------- */
 .cpchat-launcher {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 22px 12px 14px;
-  background-color: var(--cp-red);
-  color: var(--cp-cream);
-  border: 2px solid var(--cp-cream);
-  border-radius: var(--radius-pill);
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: 0.5px;
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  background: none;
+  border: 0;
   cursor: pointer;
-  box-shadow: 0 10px 28px rgba(238, 40, 47, 0.38), 0 4px 10px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  font-family: var(--font-display);
+  color: var(--cp-cream);
+  -webkit-tap-highlight-color: transparent;
+  transform: perspective(520px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.12s linear;
 }
 
-.cpchat-launcher:hover {
-  transform: translateY(-3px);
-  background-color: var(--cp-red-hover);
+/* Base 3D: borde negro y lateral rojo oscuro, 8px por debajo de la cara */
+.cpchat-launcher::before,
+.cpchat-launcher::after {
+  content: '';
+  position: absolute;
+  clip-path: var(--px-outer);
+  pointer-events: none;
 }
 
-.cpchat-launcher:focus-visible {
-  outline: 3px solid var(--cp-black);
-  outline-offset: 3px;
+.cpchat-launcher::before {
+  inset: 8px 0 -8px 0;
+  background: var(--cp-black);
+  transition: inset 0.1s steps(2, end);
+}
+
+.cpchat-launcher::after {
+  inset: 8px 4px -4px 4px;
+  background: var(--cp-red-dark);
+  clip-path: var(--px-inner);
+  transition: inset 0.1s steps(2, end);
+}
+
+.cpchat-launcher-face {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px 14px 20px;
+  background: var(--cp-black);
+  clip-path: var(--px-outer);
+  transition: transform 0.1s steps(2, end);
+}
+
+/* Relleno rojo con brillo superior y sombra inferior (volumen) */
+.cpchat-launcher-face::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--cp-red);
+  clip-path: var(--px-inner);
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -6px 0 var(--cp-red-dark);
+}
+
+.cpchat-launcher-icon,
+.cpchat-launcher-text {
+  position: relative;
 }
 
 .cpchat-launcher-icon {
   display: inline-flex;
-  width: 30px;
-  height: 30px;
-  transition: transform 0.4s ease;
+  flex-shrink: 0;
 }
 
-.cpchat-launcher:hover .cpchat-launcher-icon,
-.cpchat-launcher.is-open .cpchat-launcher-icon {
-  transform: rotate(-10deg) scale(1.1);
+.cpchat-smiley {
+  display: block;
 }
 
-.cpchat-launcher.is-loading .cpchat-launcher-icon {
-  animation: cpchat-spin 0.9s linear infinite;
+.cpchat-launcher-text {
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 2px 2px 0 var(--cp-red-dark);
 }
 
-.cpchat-launcher.has-unread {
-  animation: cpchat-nudge 2.4s ease-in-out infinite;
+/* Hover: la cara se levanta; clic: se hunde sobre la base */
+.cpchat-launcher:hover .cpchat-launcher-face { transform: translateY(-3px); }
+.cpchat-launcher:hover::before { inset: 8px 0 -11px 0; }
+.cpchat-launcher:hover::after { inset: 8px 4px -7px 4px; }
+
+.cpchat-launcher:active .cpchat-launcher-face { transform: translateY(6px); }
+.cpchat-launcher:active::before { inset: 8px 0 -2px 0; }
+.cpchat-launcher:active::after { inset: 8px 4px 2px 4px; }
+
+.cpchat-launcher:focus-visible {
+  outline: 3px dashed var(--cp-black);
+  outline-offset: 6px;
 }
 
+/* La carita parpadea cada pocos segundos; el ojo es un pixel que se aplasta */
+.cpchat-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cpchat-blink 5s steps(1, end) infinite;
+}
+
+.cpchat-launcher:hover .cpchat-smiley {
+  animation: cpchat-hop 0.5s steps(3, end) infinite alternate;
+}
+
+.cpchat-launcher.is-loading .cpchat-smiley {
+  animation: cpchat-hop 0.32s steps(2, end) infinite alternate;
+}
+
+.cpchat-launcher.has-unread .cpchat-launcher-face {
+  animation: cpchat-nudge 2.4s steps(1, end) infinite;
+}
+
+/* Chispas (estrellas de 4 puntas en píxeles) en el verde agua de la marca */
+.cpchat-spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--cp-teal);
+  box-shadow: 4px 0 var(--cp-teal), -4px 0 var(--cp-teal), 0 4px var(--cp-teal), 0 -4px var(--cp-teal);
+  pointer-events: none;
+  animation: cpchat-twinkle 2.8s steps(1, end) infinite;
+}
+
+.cpchat-spark-a { top: -10px; right: 18px; }
+.cpchat-spark-b { top: 26px; left: -14px; transform: scale(0.75); animation-delay: -1.4s; }
+
+.cpchat-launcher.is-open .cpchat-spark { display: none; }
+
+/* Contador de no leídos: cuadrado pixel */
 .cpchat-badge {
   position: absolute;
-  top: -8px;
-  right: -6px;
-  min-width: 24px;
-  height: 24px;
-  padding: 0 6px;
+  top: -12px;
+  right: -10px;
+  z-index: 2;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--cp-black);
-  color: var(--cp-cream);
-  border: 2px solid var(--cp-cream);
-  border-radius: 12px;
+  background: var(--cp-cream);
+  clip-path: var(--px-inner);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  color: var(--cp-cream);
+  isolation: isolate;
 }
 
-.cpchat-badge[hidden] {
-  display: none;
+.cpchat-badge::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: var(--cp-black);
+  z-index: -1;
 }
 
-.cpchat-bubble,
-.cpchat-fail {
+.cpchat-badge[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   Cuadros de diálogo (burbuja de invitación y aviso de respaldo)
+   Estilo RPG: borde negro escalonado, relleno crema, cola pixelada.
+   -------------------------------------------------------------------------- */
+.cpchat-dialog {
   position: relative;
-  max-width: 270px;
-  padding: 14px 16px;
+  max-width: 310px;
+  padding: 20px 26px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--cp-black);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.35;
+  isolation: isolate;
+}
+
+.cpchat-dialog::before,
+.cpchat-dialog::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+
+.cpchat-dialog::before {
+  inset: 0;
+  background: var(--cp-black);
+  clip-path: var(--px-outer);
+}
+
+.cpchat-dialog::after {
+  inset: 4px;
+  background: var(--cp-cream);
+  clip-path: var(--px-inner);
+}
+
+.cpchat-dialog[hidden] { display: none; }
+
+.cpchat-dialog-body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background-color: var(--cp-cream);
-  color: var(--cp-black);
-  border: 2px solid var(--cp-black);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  line-height: 1.35;
+  min-width: 0;
 }
 
-.cpchat-bubble[hidden],
-.cpchat-fail[hidden] {
-  display: none;
+.cpchat-dialog strong {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--cp-red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 var(--cp-cream-dark);
 }
 
 .cpchat-bubble {
   cursor: pointer;
-  animation: cpchat-pop 0.35s ease both;
+  animation: cpchat-pop 0.35s steps(4, end) both;
 }
 
-.cpchat-bubble strong,
-.cpchat-fail strong {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  color: var(--cp-red);
-  letter-spacing: 0.5px;
+.cpchat-bubble:hover .cpchat-burger { animation: cpchat-hop 0.45s steps(3, end) infinite alternate; }
+
+.cpchat-bubble-burger {
+  flex-shrink: 0;
+  display: inline-flex;
 }
 
-.cpchat-bubble-close,
-.cpchat-fail-close {
+.cpchat-burger { display: block; }
+
+/* El texto se escribe encima de una copia invisible: la caja no "salta" */
+.cpchat-bubble-text {
+  position: relative;
+  display: block;
+}
+
+.cpchat-ghost { visibility: hidden; }
+
+.cpchat-typed {
   position: absolute;
-  top: 4px;
-  right: 8px;
+  inset: 0;
+}
+
+/* Triangulito intermitente de "continuar", como en los juegos */
+.cpchat-caret {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  width: 8px;
+  height: 8px;
+  background: var(--cp-red);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  animation: cpchat-blink-caret 1s steps(1, end) infinite;
+}
+
+/* Cola pixelada apuntando al botón */
+.cpchat-tail {
+  position: absolute;
+  right: 30px;
+  bottom: -14px;
+  width: 24px;
+  height: 16px;
+  z-index: -1;
+  background: var(--cp-black);
+  clip-path: polygon(0 0, 100% 0, 100% 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, calc(100% - 8px) 8px, calc(100% - 8px) 12px, calc(100% - 12px) 12px, calc(100% - 12px) 16px, 12px 16px, 12px 12px, 8px 12px, 8px 8px, 4px 8px, 4px 4px, 0 4px);
+}
+
+.cpchat-tail::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: -4px;
+  height: 14px;
+  background: var(--cp-cream);
+  clip-path: polygon(0 0, 100% 0, 100% 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px, calc(100% - 8px) 12px, calc(100% - 8px) 100%, 8px 100%, 8px 12px, 4px 12px, 4px 8px, 0 8px);
+}
+
+.cpchat-x {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  z-index: 1;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: var(--font-display);
   font-size: 1.3rem;
   line-height: 1;
   color: var(--cp-muted);
   cursor: pointer;
 }
 
+.cpchat-x:hover { color: var(--cp-red); }
+
+/* Botón de WhatsApp del aviso de respaldo (mismo lenguaje 3D, en negro) */
 .cpchat-fail-cta {
-  margin-top: 8px;
+  position: relative;
   align-self: flex-start;
-  padding: 10px 18px;
-  background-color: var(--cp-black);
+  display: inline-block;
+  margin-top: 8px;
+  padding: 11px 18px;
+  background: var(--cp-black);
+  clip-path: var(--px-inner);
   color: var(--cp-cream);
-  border-radius: var(--radius-pill);
   font-family: var(--font-display);
   font-size: 1.05rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: inset 0 -4px 0 rgba(255, 255, 255, 0.18);
+  transition: background-color 0.1s steps(2, end);
 }
 
-.cpchat-fail-cta:hover {
-  background-color: var(--cp-red);
+.cpchat-fail-cta:hover { background: var(--cp-red); }
+.cpchat-fail-cta:active { transform: translateY(2px); }
+
+/* --------------------------------------------------------------------------
+   Animaciones: todas con steps() para que se muevan "por pixeles"
+   -------------------------------------------------------------------------- */
+@keyframes cpchat-hop {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
 }
 
-@keyframes cpchat-spin { to { transform: rotate(360deg); } }
-@keyframes cpchat-pop { from { opacity: 0; transform: translateY(8px) scale(0.96); } }
+@keyframes cpchat-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  94%, 98% { transform: scaleY(0.25); }
+}
+
+@keyframes cpchat-twinkle {
+  0%, 100% { opacity: 0; }
+  20%, 50% { opacity: 1; }
+  70% { opacity: 0.4; }
+}
+
+@keyframes cpchat-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.92); }
+}
+
 @keyframes cpchat-nudge {
-  0%, 86%, 100% { transform: translateX(0); }
-  90% { transform: translateX(-4px) rotate(-2deg); }
-  94% { transform: translateX(4px) rotate(2deg); }
+  0%, 82%, 100% { transform: translateX(0); }
+  86% { transform: translateX(-4px); }
+  90% { transform: translateX(4px); }
+  94% { transform: translateX(-4px); }
+}
+
+@keyframes cpchat-blink-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cpchat,
   .cpchat-launcher,
-  .cpchat-launcher-icon { transition: none; }
-  .cpchat-launcher.has-unread,
-  .cpchat-bubble { animation: none; }
+  .cpchat-launcher::before,
+  .cpchat-launcher::after,
+  .cpchat-launcher-face { transition: none; }
+  .cpchat-eye,
+  .cpchat-spark,
+  .cpchat-caret,
+  .cpchat-bubble,
+  .cpchat-launcher:hover .cpchat-smiley,
+  .cpchat-bubble:hover .cpchat-burger,
+  .cpchat-launcher.is-loading .cpchat-smiley,
+  .cpchat-launcher.has-unread .cpchat-launcher-face { animation: none; }
+  .cpchat-spark { opacity: 1; }
 }
 
+/* --------------------------------------------------------------------------
+   Móvil: botón solo con la carita (más compacto)
+   -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
-  .cpchat { right: 14px; bottom: 14px; }
-  .cpchat-launcher { padding: 10px; }
+  .cpchat { right: 16px; bottom: 18px; gap: 20px; }
   .cpchat-launcher-text { display: none; }
+  .cpchat-launcher-face { padding: 12px; }
+  .cpchat-spark-b { display: none; }
+  .cpchat-dialog { max-width: min(300px, calc(100vw - 48px)); }
 }

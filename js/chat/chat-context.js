@@ -25,13 +25,31 @@ window.CPChat = window.CPChat || {};
     return String(text || '').replace(/\s+/g, ' ').trim();
   }
 
+  // Teléfono canónico = la "llave" que LiveConnect usa para saber que dos
+  // pedidos son de la misma persona (agrupa por teléfono; el nombre no cuenta).
+  // Solo dígitos, y los móviles colombianos (10 dígitos que empiezan en 3) con
+  // el prefijo 57, que es como llegan los contactos de WhatsApp: así
+  // "300 123 4567", "+57 300 123 4567" y "3001234567" son la misma persona.
+  function normalizePhone(raw) {
+    let digits = String(raw || '').replace(/\D/g, '');
+    if (digits.startsWith('00')) digits = digits.slice(2);
+    if (digits.length === 10 && digits[0] === '3') digits = '57' + digits;
+    return digits;
+  }
+
+  // Para leerlo en la bandeja: +57 300 123 4567
+  function formatPhone(digits) {
+    const m = /^57(\d{3})(\d{3})(\d{4})$/.exec(digits);
+    return m ? `+57 ${m[1]} ${m[2]} ${m[3]}` : digits;
+  }
+
   // order: { city, mode, name, phone, address, notes, items:[{name,quantity}],
   //          subtotal, deliveryFee, total }
   function buildOrderMessage(order, code = orderCode()) {
     const head = [
       `PEDIDO ${code}`,
       `${order.city} · ${order.mode}`,
-      `${clean(order.name)} · ${clean(order.phone)}`
+      `${clean(order.name)} · ${formatPhone(normalizePhone(order.phone))}`
     ];
     if (order.mode === 'DOMICILIO' && clean(order.address)) {
       head.push(`Dir: ${clean(order.address)}`);
@@ -83,6 +101,6 @@ window.CPChat = window.CPChat || {};
   }
 
   window.CPChat.context = Object.freeze({
-    buildOrderMessage, validateOrder, orderCode, money
+    buildOrderMessage, validateOrder, orderCode, money, normalizePhone, formatPhone, clean
   });
 })();

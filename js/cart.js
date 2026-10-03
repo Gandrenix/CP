@@ -148,7 +148,21 @@ class CuatroParedesCart {
     return '$' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
+  // Cliente que vuelve: se pre-llenan sus datos de la vez anterior (los guarda
+  // el módulo de chat en su navegador) sin pisar lo que ya escribió.
+  prefillCustomer() {
+    if (!window.CPChat || !window.CPChat.customer) return;
+    const saved = window.CPChat.customer.load();
+    [['checkoutCustomerName', saved.name],
+     ['checkoutCustomerPhone', saved.phone],
+     ['checkoutCustomerAddress', saved.address]].forEach(([id, value]) => {
+      const input = document.getElementById(id);
+      if (input && value && !input.value) input.value = value;
+    });
+  }
+
   openCart() {
+    this.prefillCustomer();
     if (this.cartDrawer) this.cartDrawer.classList.add('open');
     if (this.cartBackdrop) this.cartBackdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -235,16 +249,40 @@ class CuatroParedesCart {
       return;
     }
     const btn = this.chatOrderBtn;
-    if (btn) btn.disabled = true;
-    const result = await window.CPChat.sendOrder(this.getOrderSnapshot());
-    if (btn) btn.disabled = false;
+    if (btn.disabled) return;
+    const label = btn.querySelector('.btn-chat-order-label');
+    const idleText = label.textContent;
+    this.setOrderStatus('');
+    btn.disabled = true;
+    btn.classList.add('is-sending');
+    label.textContent = 'ENVIANDO';
+
+    // showCard:false -> el aviso de falla se muestra aquí en el carrito (el
+    // aviso flotante del chat queda tapado por el carrito abierto).
+    const result = await window.CPChat.sendOrder(this.getOrderSnapshot(), { showCard: false });
+
+    btn.disabled = false;
+    btn.classList.remove('is-sending');
+    label.textContent = idleText;
 
     if (!result.ok) {
-      this.showToast(result.error);
+      this.setOrderStatus(result.error, result.fallbackUrl);
       return;
     }
     this.closeCart();
     this.showToast('¡Pedido enviado! Te respondemos por el chat.');
+  }
+
+  // Mensaje fijo bajo el botón de enviar. Con fallbackUrl, ofrece enviar el
+  // mismo pedido por WhatsApp. Texto vacío = limpiar.
+  setOrderStatus(text, fallbackUrl) {
+    const status = document.getElementById('chatOrderStatus');
+    const fallback = document.getElementById('chatFallbackBtn');
+    if (!status || !fallback) return;
+    status.textContent = text || '';
+    status.hidden = !text;
+    fallback.hidden = !fallbackUrl;
+    if (fallbackUrl) fallback.href = fallbackUrl;
   }
 
   checkoutWhatsApp() {

@@ -30,14 +30,19 @@ window.CPChat = window.CPChat || {};
   async function open() {
     const { ui, widget } = C();
     ui.hideFailure();
-    if (widget.isReady()) {
+    if (widget.isPanelReady()) {
       widget.show();
       return true;
     }
     ui.setLoading(true);
     try {
-      await widget.load({ open: true });
+      await widget.load();
       widget.show();
+      if (!(await widget.whenPanelReady())) {
+        widget.hide();
+        ui.showFailure(whatsappUrl());
+        return false;
+      }
       return true;
     } catch (err) {
       ui.showFailure(whatsappUrl());
@@ -49,30 +54,61 @@ window.CPChat = window.CPChat || {};
 
   async function toggle() {
     const { widget } = C();
-    if (widget.isReady()) widget.toggle();
+    if (widget.isPanelReady()) widget.toggle();
     else await open();
   }
 
   // order: ver chat-context.js. Devuelve { ok, error? } para que quien llama
   // (el carrito) decida cómo avisar; no toca el DOM del carrito.
-  async function sendOrder(order) {
+  //   options.showCard=false: no mostrar el aviso flotante de WhatsApp (el
+  //   carrito, que lo tapa, muestra su propio aviso con result.fallbackUrl).
+  async function sendOrder(rawOrder, options = {}) {
+    const showCard = options.showCard !== false;
     const { context, widget, ui } = C();
-    const error = context.validateOrder(order);
+    const error = context.validateOrder(rawOrder);
     if (error) return { ok: false, error };
+
+    // La identidad del cliente es su teléfono (normalizado), no el nombre.
+    const order = Object.assign({}, rawOrder, {
+      name: context.clean(rawOrder.name),
+      phone: context.normalizePhone(rawOrder.phone)
+    });
 
     const message = context.buildOrderMessage(order);
     ui.hideFailure();
     ui.setLoading(true);
-    setFlag(C().config.storageKeys.started);
     try {
-      const result = await widget.sendMessage(message);
       // Nombre y celular ya escritos en el carrito: el contacto llega
-      // identificado sin pasar datos personales por la URL.
-      if (result === 'sent') widget.identify({ userName: order.name, userPhone: order.phone });
+      // identificado (antes del mensaje, para que nazca con su nombre) y sin
+      // pasar datos personales por la URL.
+      await widget.load();
+      widget.identify({ userName: order.name, userPhone: order.phone });
+      const how = await widget.sendMessage(message);
+      // Solo se da por entregado si la conversación nueva apareció: si no
+      // (dominio no autorizado en el canal, bloqueador, sin red) el pedido pudo
+      // perderse, y mejor avisar y ofrecer WhatsApp que mentir.
+      if (how === 'unconfirmed') {
+        // El panel que no pudo arrancar queda abierto (en blanco) encima de
+        // todo y taparía el aviso: se cierra para que se vea la alternativa.
+        widget.hide();
+        if (showCard) ui.showFailure(whatsappUrl(message));
+        return {
+          ok: false,
+          fallbackUrl: whatsappUrl(message),
+          error: 'No pudimos confirmar que el chat recibió tu pedido. Envíalo por WhatsApp y te atendemos igual.'
+        };
+      }
+      setFlag(C().config.storageKeys.started);
+      C().customer.save({ name: order.name, phone: rawOrder.phone, address: rawOrder.address });
       return { ok: true, message };
     } catch (err) {
-      ui.showFailure(whatsappUrl(message));
-      return { ok: false, error: 'No pudimos abrir el chat. Te dejamos WhatsApp como alternativa.' };
+      widget.hide();
+      if (showCard) ui.showFailure(whatsappUrl(message));
+      return {
+        ok: false,
+        fallbackUrl: whatsappUrl(message),
+        error: 'No pudimos abrir el chat. Envíalo por WhatsApp y te atendemos igual.'
+      };
     } finally {
       ui.setLoading(false);
     }
@@ -83,7 +119,9 @@ window.CPChat = window.CPChat || {};
     inited = true;
     const { ui, widget, config } = C();
 
-    ui.mount({ onOpen: open, onToggle: toggle });
+    // onWarm: el cursor/dedo se acercó al botón, así que se adelanta la carga
+    // del widget y el clic lo encuentra casi listo (sin abrirlo todavía).
+    ui.mount({ onOpen: open, onToggle: toggle, onWarm: () => widget.load().catch(() => {}) });
 
     // El hero ya tiene su propia composición en la esquina inferior derecha
     // (el sello "Hecho para el antojo"); el botón entra cuando se sale de él.
@@ -105,11 +143,11 @@ window.CPChat = window.CPChat || {};
       // Llegó con un enlace de pedido (?lcmsg=...): el widget tiene que
       // arrancar ya para tomarlo, y la URL se limpia sola al estar listo.
       setFlag(config.storageKeys.started);
-      widget.load({}).catch(() => ui.showFailure(whatsappUrl()));
+      widget.load().catch(() => ui.showFailure(whatsappUrl()));
     } else if (flag(config.storageKeys.started)) {
       // Ya chateó antes: se precarga en reposo para restaurar el contador.
       const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 2500));
-      idle(() => widget.load({}).catch(() => {}));
+      idle(() => widget.load().catch(() => {}));
     } else if (!flag(config.storageKeys.introSeen)) {
       setTimeout(() => ui.showBubble(), config.introBubbleDelayMs);
     }

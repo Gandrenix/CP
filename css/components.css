@@ -2095,12 +2095,69 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 4px 16px rgba(238, 40, 47, 0.3);
 }
 
 .btn-chat-order:hover {
   background-color: var(--cp-red-hover);
   transform: translateY(-2px);
+}
+
+/* Enviando: el botón se queda quieto y los puntitos avisan que va en camino */
+.btn-chat-order.is-sending {
+  background-color: var(--cp-red-dark);
+  cursor: progress;
+  transform: none;
+}
+
+.btn-chat-order.is-sending .btn-chat-order-label::after {
+  content: '';
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  animation: cp-dots 1s steps(1, end) infinite;
+}
+
+@keyframes cp-dots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+}
+
+/* Mensaje fijo bajo el botón cuando el pedido no pudo confirmarse */
+.cart-order-status {
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  background: var(--cp-cream-card);
+  border-left: 4px solid var(--cp-red);
+  color: var(--cp-black);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.cart-order-status[hidden],
+.cart-whatsapp-fallback[hidden] { display: none; }
+
+.cart-whatsapp-fallback {
+  display: block;
+  margin-top: 10px;
+  padding: 13px 20px;
+  background: var(--cp-black);
+  color: var(--cp-cream);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.cart-whatsapp-fallback:hover { background: var(--cp-red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-chat-order.is-sending .btn-chat-order-label::after { animation: none; content: '...'; }
 }
 
 /* --------------------------------------------------------------------------

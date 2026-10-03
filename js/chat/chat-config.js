@@ -23,6 +23,14 @@ window.CPChat = window.CPChat || {};
     // sin registrar en el canal), se ofrece WhatsApp para no perder el pedido.
     loadTimeoutMs: 9000,
 
+    // Tope de espera a que el panel abierto termine de pintar (solo afecta al
+    // indicador "cargando" del botón; el panel ya está a la vista).
+    panelTimeoutMs: 4000,
+
+    // Tope de espera, tras enviar un pedido, a que el panel confirme que abrió.
+    // Más largo que el anterior porque acá una falsa alarma sí cuesta.
+    sendTimeoutMs: 8000,
+
     // Número del canal WhatsApp Business conectado a LiveConnect.
     fallbackWhatsApp: '573178705555',
 
@@ -33,7 +41,8 @@ window.CPChat = window.CPChat || {};
     // restaurar el contador de no leídos sin que tenga que abrir nada.
     storageKeys: Object.freeze({
       started: 'cp_chat_started',
-      introSeen: 'cp_chat_intro_seen'
+      introSeen: 'cp_chat_intro_seen',
+      customer: 'cp_customer'
     }),
 
     labels: Object.freeze({
