@@ -1,0 +1,289 @@
+{
+  "palette": {
+    "rojo": "#EE282F",
+    "crema": "#FFF8E9",
+    "negro": "#111111",
+    "teal": "#B3DDDE",
+    "amarillo": "#FFD84A"
+  },
+  "smiley": {
+    "frame": [
+      48,
+      48
+    ],
+    "tiers": {
+      "1": "smiley_t1.png",
+      "2": "smiley_t2.png",
+      "3": "smiley_t3.png",
+      "4": "smiley_t4.png"
+    },
+    "anims": {
+      "idle": {
+        "row": 0,
+        "frames": 4,
+        "fps": 4,
+        "loop": true
+      },
+      "blink": {
+        "row": 1,
+        "frames": 3,
+        "fps": 8,
+        "loop": false
+      },
+      "sleep": {
+        "row": 2,
+        "frames": 4,
+        "fps": 2,
+        "loop": true
+      },
+      "wave": {
+        "row": 3,
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "jump": {
+        "row": 4,
+        "frames": 6,
+        "fps": 10,
+        "loop": false
+      },
+      "eat": {
+        "row": 5,
+        "frames": 8,
+        "fps": 6,
+        "loop": false
+      },
+      "sparkle": {
+        "row": 6,
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "sad": {
+        "row": 7,
+        "frames": 4,
+        "fps": 4,
+        "loop": true
+      },
+      "clock": {
+        "row": 8,
+        "frames": 4,
+        "fps": 3,
+        "loop": true
+      },
+      "ticket": {
+        "row": 9,
+        "frames": 4,
+        "fps": 3,
+        "loop": true
+      },
+      "yawn": {
+        "row": 10,
+        "frames": 6,
+        "fps": 4,
+        "loop": false
+      },
+      "stretch": {
+        "row": 11,
+        "frames": 7,
+        "fps": 6,
+        "loop": false
+      },
+      "whistle": {
+        "row": 12,
+        "frames": 6,
+        "fps": 5,
+        "loop": false
+      },
+      "charge": {
+        "row": 13,
+        "frames": 6,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "icons": {
+    "cell": 32,
+    "sheet": "icons.png",
+    "items": {
+      "tocineta": [
+        0,
+        0
+      ],
+      "queso": [
+        1,
+        0
+      ],
+      "pepinillos": [
+        2,
+        0
+      ],
+      "enchulado": [
+        3,
+        0
+      ],
+      "galleta": [
+        4,
+        0
+      ],
+      "soda": [
+        5,
+        0
+      ],
+      "cola": [
+        6,
+        0
+      ],
+      "agua": [
+        7,
+        0
+      ],
+      "burger": [
+        0,
+        1
+      ],
+      "papas": [
+        1,
+        1
+      ],
+      "combo": [
+        2,
+        1
+      ],
+      "combo_dos": [
+        3,
+        1
+      ],
+      "cumple": [
+        4,
+        1
+      ],
+      "punto": [
+        5,
+        1
+      ],
+      "candado": [
+        6,
+        1
+      ],
+      "ticket": [
+        7,
+        1
+      ]
+    }
+  },
+  "badges": {
+    "cell": 32,
+    "sheet": "badges.png",
+    "items": {
+      "nivel_1": [
+        0,
+        0
+      ],
+      "nivel_2": [
+        1,
+        0
+      ],
+      "nivel_3": [
+        2,
+        0
+      ],
+      "nivel_4": [
+        3,
+        0
+      ]
+    }
+  },
+  "particles": {
+    "cell": 20,
+    "sheet": "particles.png",
+    "items": {
+      "confeti_rojo": [
+        0,
+        0
+      ],
+      "confeti_crema": [
+        1,
+        0
+      ],
+      "confeti_teal": [
+        2,
+        0
+      ],
+      "confeti_amarillo": [
+        3,
+        0
+      ],
+      "mini_burger": [
+        4,
+        0
+      ],
+      "destello_3": [
+        5,
+        0
+      ],
+      "destello_5": [
+        6,
+        0
+      ],
+      "destello_7": [
+        0,
+        1
+      ],
+      "moneda_0": [
+        1,
+        1
+      ],
+      "moneda_1": [
+        2,
+        1
+      ],
+      "moneda_2": [
+        3,
+        1
+      ],
+      "moneda_3": [
+        4,
+        1
+      ],
+      "moneda_4": [
+        5,
+        1
+      ],
+      "moneda_5": [
+        6,
+        1
+      ]
+    }
+  },
+  "rooms": {
+    "size": [
+      160,
+      90
+    ],
+    "smiley_anchor": [
+      80,
+      84
+    ],
+    "items": {
+      "1": {
+        "file": "room_1.png",
+        "name": "PRIMERA PARED"
+      },
+      "2": {
+        "file": "room_2.png",
+        "name": "PARCHADO"
+      },
+      "3": {
+        "file": "room_3.png",
+        "name": "DE LA CASA"
+      },
+      "4": {
+        "file": "room_4.png",
+        "name": "CUATRO PAREDES"
+      }
+    }
+  }
+}

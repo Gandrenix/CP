@@ -275,3 +275,10 @@
     display: none;
   }
 }
+
+/* Entre 769 y 1100 px caben 5 enlaces + el botón solo si se aprietan un poco (se añadió CP CLUB). */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .header-nav { gap: 16px; }
+  .nav-link { font-size: 0.95rem; white-space: nowrap; }
+  .btn-pedir-header { white-space: nowrap; font-size: 0.9rem; padding-left: 14px; padding-right: 14px; }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Caja · CP Club</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#161616">
+  <link rel="icon" href="/assets/img/icon-smiley.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/club/css/club.css">
+</head>
+<body class="cl caja">
+
+  <header class="cl-top">
+    <span class="cl-brand">CP CLUB · CAJA</span>
+    <button class="cl-link" id="btn-out" type="button" hidden>SALIR</button>
+  </header>
+
+  <main>
+    <!-- PIN -->
+    <section class="cl-screen" id="s-pin">
+      <div class="hero-spr" style="display:grid;place-items:center;height:150px;margin-top:18px"><div id="pin-spr"></div></div>
+      <h1 class="cl-title" style="text-align:center">PIN de la <em>caja</em></h1>
+      <div class="pin-dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p class="cl-msg" id="pin-msg" role="status" aria-live="polite" style="text-align:center"></p>
+      <div class="keys" id="keys"></div>
+    </section>
+
+    <!-- CANJE -->
+    <section class="cl-screen" id="s-main" hidden>
+      <div class="who"><div><span class="cl-label" style="margin:0">Caja</span><b id="who"></b></div></div>
+      <div class="notice" id="sync-warn" hidden>El Club no está recibiendo las ventas de Toteat en este momento: los puntos nuevos no se están sumando. Avisa a quien administra el sistema.</div>
+
+      <form id="phone-form" novalidate style="margin-bottom:22px">
+        <label class="cl-label" for="cust-phone">Consultar cliente por celular</label>
+        <div class="cl-field">
+          <span class="cl-pre">+57</span>
+          <input class="cl-in" id="cust-phone" type="tel" inputmode="tel" autocomplete="off" placeholder="300 123 4567">
+        </div>
+        <button class="cl-btn block" type="submit" style="margin-top:14px" id="cust-go">Ver puntos</button>
+      </form>
+
+      <form id="code-form" novalidate>
+        <label class="cl-label" for="code">Código del cliente</label>
+        <div class="cl-field">
+          <input class="cl-in" id="code" type="text" inputmode="text" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="7" placeholder="CP-7K3Q" style="text-transform:uppercase">
+        </div>
+        <button class="cl-btn block" type="submit" style="margin-top:14px" id="code-go">Buscar</button>
+      </form>
+
+      <div id="result" aria-live="polite" aria-atomic="true"></div>
+
+      <h2 class="cl-h">Entregados hoy</h2>
+      <ul class="log" id="log"><li>Todavía ninguno</li></ul>
+      <p class="cl-foot">Código de un solo uso y con vencimiento. Confirma el nombre y los últimos 4 dígitos del celular con la persona antes de entregar.</p>
+    </section>
+  </main>
+
+  <script src="/club/js/rules.js"></script>
+  <script src="/club/js/mock-api.js"></script>
+  <script src="/club/js/http-api.js"></script>
+  <script src="/club/js/api.js"></script>
+  <script src="/club/js/sprite.js"></script>
+  <script src="/club/js/caja.js"></script>
+</body>
+</html>

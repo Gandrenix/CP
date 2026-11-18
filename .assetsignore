@@ -25,3 +25,8 @@ wrangler.jsonc
 .git
 node_modules/
 .wrangler/
+
+# Backend del Club: código del Worker, esquema y pruebas (no son archivos del sitio)
+worker/
+wrangler.club.jsonc
+.dev.vars

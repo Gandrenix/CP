@@ -1,0 +1,39 @@
+{
+  // MIGRAR: mientras se prueba, el Club vive en la cuenta de Cloudflare de Andrés
+  // (andresgarcia2964). Al entregar se migra todo a la cuenta de Cuatro Paredes:
+  // ver club-de-puntos/02_migracion-de-cuenta.md.
+  //
+  // Configuración de DESARROLLO del backend del Club (wrangler dev --local).
+  // Cuando se despliegue, estas piezas (main, binding DB, cron y run_worker_first)
+  // se fusionan en wrangler.jsonc. database_id se llena al crear la base real.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // OJO: "cp" es el Worker del sitio en producción. Las pruebas van en un Worker
+  // aparte (cp-club-test, en su URL de workers.dev) para no tocar el sitio real.
+  "name": "cp-club-test",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "cp-club", "database_id": "32374f13-1794-4537-a9fc-6bbb5d1682dd" }
+  ],
+  // Mantiene la URL de workers.dev (con rutas, wrangler la apaga si no se pide): por ahí se administra.
+  "workers_dev": true,
+  "preview_urls": false,
+  // Dirección pública: SOLO estas rutas del dominio del sitio van a este Worker. El resto de
+  // cuatroparedes.wienerhound.com sigue en el Worker "cp" (una ruta gana sobre el Custom Domain,
+  // así que el sitio actual no se toca). Quitar estas líneas y desplegar devuelve todo como estaba.
+  // OJO: /api/admin/* NO se publica en el dominio; se administra por la URL de workers.dev.
+  "routes": [
+    { "pattern": "cuatroparedes.wienerhound.com/club", "zone_name": "wienerhound.com" },
+    { "pattern": "cuatroparedes.wienerhound.com/club/*", "zone_name": "wienerhound.com" },
+    { "pattern": "cuatroparedes.wienerhound.com/api/club/*", "zone_name": "wienerhound.com" },
+    { "pattern": "cuatroparedes.wienerhound.com/api/caja/*", "zone_name": "wienerhound.com" }
+  ],
+  "triggers": { "crons": ["* * * * *"] }
+}

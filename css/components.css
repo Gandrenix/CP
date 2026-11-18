@@ -1199,6 +1199,12 @@
   border-bottom: 2px solid var(--cp-cream-dark);
 }
 
+.cp-club-section .section-title-giant { color: #1a0b0b; }
+.cp-club-perk-desc b { color: var(--cp-black); }
+.club-card-3d-wrap.club-room-link { display: block; aspect-ratio: 16 / 9; max-width: 520px; }
+.club-card-3d-wrap.club-room-link img { image-rendering: pixelated; }
+.club-card-3d-wrap.club-room-link:hover { transform: translateY(-3px); }
+
 .cp-club-grid {
   display: grid;
   grid-template-columns: 1fr 1.2fr;

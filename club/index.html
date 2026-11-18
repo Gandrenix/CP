@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CP Club · Cuatro Paredes</title>
+  <meta name="description" content="Consulta tus puntos del CP Club de Cuatro Paredes con tu celular.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#161616">
+  <link rel="icon" href="/assets/img/icon-smiley.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/club/css/club.css">
+</head>
+<body class="cl">
+
+  <header class="cl-top">
+    <a class="cl-back" href="/">&larr; CUATRO PAREDES</a>
+    <span class="cl-brand">CP CLUB</span>
+    <button class="cl-link" id="btn-out" type="button" hidden>SALIR</button>
+  </header>
+
+  <!-- Cuarto + mascota: siempre visible -->
+  <div class="arcade-layout">
+  <aside class="cabinet" aria-label="El cuarto de Smiley">
+    <div class="marquee"><h2>El cuarto</h2><span id="room-number">01 / 04</span></div>
+    <div class="stage-wrap"><div class="stage" id="stage" aria-label="Tu cuarto del CP Club"></div></div>
+    <div class="controls">
+      <div class="pad" aria-label="Mover a Smiley">
+        <button type="button" data-dir="L" aria-label="Izquierda">←</button>
+        <button type="button" data-dir="U" aria-label="Arriba">↑</button>
+        <button type="button" data-dir="D" aria-label="Abajo">↓</button>
+        <button type="button" data-dir="R" aria-label="Derecha">→</button>
+      </div>
+      <button id="sound" type="button" aria-pressed="false">Sonido apagado</button>
+    </div>
+    <details class="hints"><summary>Pistas del cuarto</summary><p>Toca a Smiley varias veces para cargarlo. Prueba tres flechas iguales, o muévete a la izquierda, la derecha y la izquierda. También puedes usar las flechas del teclado dentro del cuarto.</p></details>
+    <span class="sr" id="game-status" role="status"></span>
+  </aside>
+
+  <main>
+    <!-- ENTRAR -->
+    <section class="cl-screen" id="s-login">
+      <h1 class="cl-title">Entra con<br>tu <em>celular</em></h1>
+      <p class="cl-sub">Cada burger suma. Pon el número que le das al cajero y mira tus puntos.</p>
+      <form id="login-form" novalidate>
+        <label class="cl-label" for="phone">Tu celular</label>
+        <div class="cl-field">
+          <span class="cl-pre">+57</span>
+          <input class="cl-in" id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="300 123 4567">
+        </div>
+        <p class="cl-msg" id="login-msg" role="status" aria-live="polite"></p>
+        <button class="cl-btn block" type="submit" id="login-go">Entrar</button>
+      </form>
+      <div class="cl-demo-chips" id="chips" hidden>
+        <span class="cl-label" style="width:100%;margin:0">Clientes de prueba</span>
+      </div>
+      <p class="cl-foot">Solo mostramos tu saldo. Si todavía no estás en el Club, pídele al cajero que registre tu celular en tu próxima compra y te regalamos <b>30 puntos</b>.</p>
+    </section>
+
+    <!-- INICIO (ya con su celular) -->
+    <section class="cl-screen" id="s-home" hidden>
+      <section class="scoreboard" aria-label="Tu tablero de puntos"><div class="hud">
+        <div class="coin" id="coin"></div>
+        <div>
+          <div class="hud-pts" id="pts" aria-hidden="true">0</div><span id="pts-status" class="sr" role="status"></span>
+          <div class="hud-unit" id="pts-unit">PUNTOS</div>
+        </div>
+        <div class="hud-who">HOLA<b id="who"></b></div>
+      </div>
+
+      <div class="tier-line"><span class="bdg" id="bdg"></span><span id="tier-name"></span></div>
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <p class="bar-note" id="bar-note"></p>
+      <a class="reward-link" href="#rewards" id="combo" hidden></a>
+      </section>
+      <div class="notice" id="notice" hidden></div>
+
+      <h2 class="cl-h">Recompensas</h2>
+      <div id="rewards"></div>
+
+      <h2 class="cl-h">Tu cumpleaños</h2>
+      <div class="bday" id="bday"></div>
+
+      <h2 class="cl-h">Cómo funciona</h2>
+      <ol class="how">
+        <li><span><b>1 punto por cada $1.000</b> que consumes, y <b>+30</b> por cada combo.</span></li>
+        <li><span>Cuando te alcance, toca <b>CANJEAR</b>: te damos un código de 10 minutos.</span></li>
+        <li><span>Muéstraselo al cajero. <b>Solo vale una vez</b> y es solo tuyo.</span></li>
+      </ol>
+      <p class="cl-foot">Los puntos vencen a los 90 días de tu última compra. Un premio por visita; no se combina con otros descuentos. Tus datos los usa Cuatro Paredes solo para el Club. <button type="button" id="open-priv">Aviso de privacidad</button></p>
+    </section>
+  </main>
+  </div>
+
+  <!-- Canje: confirmar + código -->
+  <div class="cl-sheet" id="sheet-code" hidden role="dialog" aria-modal="true" aria-labelledby="sc-title">
+    <div class="cl-card">
+      <div id="sc-confirm" hidden>
+        <div class="mini-ico"><div id="sc-ico1"></div></div>
+        <h2 class="sheet-h" id="sc-title">¿Canjear?</h2>
+        <p class="sheet-p" id="sc-text"></p>
+        <div class="sheet-row">
+          <button class="cl-btn block" id="sc-yes" type="button">Sí, canjear</button>
+          <button class="cl-btn ghost block" id="sc-no" type="button">Ahora no</button>
+        </div>
+      </div>
+      <div id="sc-show" hidden>
+        <div class="hero-spr"><div id="sc-spr"></div></div>
+        <h2 class="sheet-h" id="code-title">Tu código</h2>
+        <div class="code-box" id="sc-code" aria-live="polite"></div>
+        <div class="timer" id="sc-timer"></div>
+        <p class="sheet-p" style="margin-top:12px" id="sc-info"></p>
+        <div class="sheet-row">
+          <button class="cl-btn ghost block" id="sc-cancel" type="button">Cancelar canje</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listo / vencido -->
+  <div class="cl-sheet" id="sheet-done" hidden role="dialog" aria-modal="true" aria-labelledby="sd-title">
+    <div class="cl-card">
+      <div class="hero-spr"><div id="sd-spr"></div></div>
+      <h2 class="sheet-h" id="sd-title"></h2>
+      <p class="sheet-p" id="sd-text"></p>
+      <div class="sheet-row"><button class="cl-btn block" id="sd-ok" type="button">Listo</button></div>
+    </div>
+  </div>
+
+  <!-- Privacidad (BORRADOR: el texto final lo revisa un abogado) -->
+  <div class="cl-sheet" id="sheet-priv" hidden role="dialog" aria-modal="true" aria-labelledby="sp-title">
+    <div class="cl-card">
+      <h2 class="sheet-h" id="sp-title">Aviso de privacidad</h2>
+      <p class="sheet-p" style="text-align:left"><b>BORRADOR · por revisar antes de publicar.</b><br><br>
+        Cuatro Paredes S.A.S. (NIT 901.753.124-4) es la responsable de tus datos. Usamos tu <b>celular, nombre de pila, el valor de tus compras y, si nos lo cuentas, tu fecha de cumpleaños</b> solo para llevar tus puntos del CP Club, avisarte de ellos y entregarte tus premios.<br><br>
+        No vendemos tus datos. Puedes consultarlos, corregirlos o pedir que los eliminemos escribiendo a administracion@cuatroparedesburgers.com (Ley 1581 de 2012).</p>
+      <div class="sheet-row"><button class="cl-btn block" id="sp-ok" type="button">Entendido</button></div>
+    </div>
+  </div>
+
+  <!-- Barra de pruebas: solo con ?demo=1 -->
+  <div class="demo" id="demo" hidden>
+    <div class="demo-t">DEMO · DATOS DE PRUEBA · CAJA: /club/caja/ PIN 1234</div>
+    <div class="demo-b">
+      <button type="button" data-d="sale">+ COMPRA $74.000</button>
+      <button type="button" data-d="combo">+ 2 COMBOS $90.000</button>
+      <button type="button" data-d="tier">SUBIR DE NIVEL</button>
+      <button type="button" data-d="expire">PUNTOS POR VENCER</button>
+      <button type="button" data-d="reset">REINICIAR DATOS</button>
+    </div>
+  </div>
+
+  <script src="/club/js/rules.js"></script>
+  <script src="/club/js/mock-api.js"></script>
+  <script src="/club/js/http-api.js"></script>
+  <script src="/club/js/api.js"></script>
+  <script src="/club/js/sprite.js"></script>
+  <script src="/club/js/cuarto.js"></script>
+  <script src="/club/js/club.js"></script>
+</body>
+</html>

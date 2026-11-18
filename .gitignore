@@ -12,3 +12,7 @@ mockup_panels/
 .claude/
 .vscode/
 
+
+# secretos locales de wrangler
+.dev.vars
+.wrangler/
